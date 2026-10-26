@@ -1,6 +1,9 @@
 "use client";
+import { OFFICIAL_MEDIA } from "@/content/official-media";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useVisibleVideo } from "@/hooks/use-visible-video";
+import { ResponsiveLayout } from "./responsive-layout";
 
 const SECTION_HEIGHT = 2000;
 
@@ -17,27 +20,30 @@ export const Hero = () => {
 /* ----------------------------------------------- CENTER VIDEO ----------------------------------------------- */
 const CenterImage = () => {
   const { scrollY } = useScroll();
-  
-  const scale = useTransform(scrollY, [0, 1200], [1.4, 1]);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  useVisibleVideo(videoRef);
   const videoOpacity = useTransform(scrollY, [SECTION_HEIGHT, SECTION_HEIGHT + 400], [1, 0]);
 
   // Stronger effect
   const brightness = useTransform(scrollY, [400, 1100], [100, 65]);   // Video dark ho jayegi
+  const filter = useTransform(brightness, (value) => `brightness(${value}%)`);
   const videoScale = useTransform(scrollY, [400, 1100], [1, 0.92]);
 
   return (
     <div className="sticky top-0 h-screen w-full overflow-hidden bg-black">
       <motion.video
+        ref={videoRef}
         src="/clg.mp4"
         className="h-full w-full object-cover"
         autoPlay 
         loop 
         muted 
         playsInline
+        preload="metadata"
         style={{ 
           scale: videoScale,
           opacity: videoOpacity,
-          filter: `brightness(${brightness}%)` 
+          filter
         }}
       />
 
@@ -63,46 +69,40 @@ const CenterImage = () => {
 /* ----------------------------------------------- PARALLAX IMAGES ----------------------------------------------- */
 const ParallaxImages = () => {
   return (
-    <>
-      {/* === DESKTOP VIEW - 4 Images Overlapping (Original Style) === */}
-      <div className="hidden md:block">
+    <ResponsiveLayout desktop={
+      <div>
         <div className="mx-auto max-w-5xl px-4 pt-[200px]">
           <ParallaxImg 
-            src="https://i.pinimg.com/736x/3a/7d/08/3a7d084a604f586932598e6d7251f255.jpg" 
-            alt="Students studying" 
+            src={OFFICIAL_MEDIA.heroTechnology}
+            alt="Technomantra at KS School"
             start={-200} 
             end={200} 
             className="w-1/3" 
           />
           <ParallaxImg 
-            src="https://i.pinimg.com/736x/7f/d4/1f/7fd41fc5bf889c5ea953649ade847942.jpg" 
-            alt="Modern campus" 
+            src={OFFICIAL_MEDIA.heroCampus}
+            alt="KS School entrance"
             start={200} 
             end={-250} 
             className="mx-auto w-2/3" 
           />
           <ParallaxImg 
-            src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=2670&auto=format&fit=crop" 
-            alt="Graduation ceremony" 
+            src={OFFICIAL_MEDIA.heroPortrait}
+            alt="Advent decorations in the KS School atrium"
             start={-200} 
             end={200} 
             className="ml-auto w-1/3" 
           />
           <ParallaxImg 
-            src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2670&auto=format&fit=crop" 
-            alt="Classroom session" 
+            src={OFFICIAL_MEDIA.heroCommunity}
+            alt="Melange decorations in the KS School atrium"
             start={0} 
             end={-500} 
             className="ml-24 w-5/12" 
           />
         </div>
       </div>
-
-      {/* === MOBILE VIEW - Stacked Vertical Images === */}
-      <div className="md:hidden">
-        <MobileStackedImages />
-      </div>
-    </>
+    } mobile={<MobileStackedImages />} />
   );
 };
 
@@ -111,20 +111,20 @@ const MobileStackedImages = () => {
   return (
     <div className="px-4 pt-12 pb-20 space-y-20">
       <MobileStackedImage
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSn31BkC9SOnTNgYFS1WqCV8m_qXQpUiW9_W0IsxWNqjw&s=10" 
-        alt="Students in class"
+        src={OFFICIAL_MEDIA.heroTechnology}
+        alt="Technomantra student artwork"
       />
       <MobileStackedImage
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT51Nwg4nQDnjy8nG7urxVSPVln_-18NuHW1SNOi1q2Q&s=10"
+        src={OFFICIAL_MEDIA.heroCampus}
         alt="Campus life"
       />
       <MobileStackedImage
-        src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=800&fit=crop"
-        alt="Graduation moment"
+        src={OFFICIAL_MEDIA.heroPortrait}
+        alt="Advent decorations in the KS School atrium"
       />
       <MobileStackedImage
-        src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=800&fit=crop"
-        alt="Classroom"
+        src={OFFICIAL_MEDIA.heroCommunity}
+        alt="Melange decorations in the KS School atrium"
       />
     </div>
   );
@@ -148,7 +148,7 @@ return (
       <img
         src={src}
         alt={alt}
-        className="w-full h-auto rounded-3xl shadow-2xl object-cover aspect-[4/5]"
+        className="w-full aspect-[4/5] rounded-3xl shadow-2xl object-cover"
         loading="lazy"
       />
     </motion.div>
@@ -178,7 +178,7 @@ const ParallaxImg = ({ className, alt, src, start, end }: ParallaxImgProps) => {
 
   return (
     <motion.div className={className} ref={ref} style={{ y, scale, opacity }}>
-      <img src={src} alt={alt} className="w-full h-auto" loading="lazy" />
+      <img src={src} alt={alt} className="w-full h-auto rounded-2xl" loading="lazy" />
     </motion.div>
   );
 };

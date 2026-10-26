@@ -25,15 +25,14 @@ export default function GalleryModal({
   const images = item.images?.length ? item.images : [item.img];
 
   useEffect(() => {
-    if (isOpen) {
-      setIndex(0);
-      document.body.style.overflow = "hidden";
-      closeRef.current?.focus();
-    } else {
-      document.body.style.overflow = "";
-    }
+    if (!isOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    const previousFocus = document.activeElement;
+    document.body.style.overflow = "hidden";
+    closeRef.current?.focus();
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
+      if (previousFocus instanceof HTMLElement) previousFocus.focus({ preventScroll: true });
     };
   }, [isOpen, item]);
 
@@ -51,10 +50,19 @@ export default function GalleryModal({
   // Auto-advance, paused on hover
   useEffect(() => {
     if (!isOpen || hovered || images.length <= 1) return;
-    const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % images.length);
-    }, 4000);
-    return () => clearInterval(interval);
+    let interval: ReturnType<typeof setInterval> | undefined;
+    const updatePlayback = () => {
+      clearInterval(interval);
+      if (!document.hidden) interval = setInterval(() => {
+        setIndex((prev) => (prev + 1) % images.length);
+      }, 4000);
+    };
+    updatePlayback();
+    document.addEventListener("visibilitychange", updatePlayback);
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener("visibilitychange", updatePlayback);
+    };
   }, [isOpen, hovered, images.length]);
 
   if (!isOpen) return null;
@@ -67,6 +75,9 @@ export default function GalleryModal({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-4 md:p-8"
+        role="dialog"
+        aria-modal="true"
+        aria-label={item.title}
         onMouseDown={(e) => {
           if (e.target === overlayRef.current) onClose();
         }}
@@ -92,7 +103,9 @@ export default function GalleryModal({
                     key={src + i}
                     src={src}
                     alt={`${item.title} - photo ${i + 1}`}
+                    style={{ objectPosition: item.tag === "Library" ? "left center" : undefined }}
                     referrerPolicy="no-referrer"
+                    decoding="async"
                     className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
                       i === index ? "opacity-100" : "opacity-0"
                     }`}

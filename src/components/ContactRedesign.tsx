@@ -1,5 +1,6 @@
 "use client";
 
+import { SCHOOL } from "@/content/school";
 import React, { useState } from 'react';
 import { MapPin, Phone, Mail, ExternalLink, Send, CheckCircle2 } from 'lucide-react';
 
@@ -40,11 +41,12 @@ const ContactRedesign = () => {
       const response = await fetch('/api/contact-us/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        signal: AbortSignal.timeout(25000),
         body: JSON.stringify(formData)
       });
       const data = await response.json();
 
-      if (data.success) {
+      if (response.ok && data.success === true) {
         setStatus('success');
         setFormData({ fullName: '', email: '', phone: '', message: '' });
       } else {
@@ -87,7 +89,7 @@ const ContactRedesign = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-lg mb-2">Call Us</h4>
-                  <p className="text-ink/80 text-sm leading-relaxed">+91 79 2630 1302<br />+91 79 2630 0000</p>
+                  <p className="text-ink/80 text-sm leading-relaxed">{SCHOOL.phones[0]}<br />{SCHOOL.phones[1]}</p>
                 </div>
               </div>
               
@@ -97,7 +99,7 @@ const ContactRedesign = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-lg mb-2">Email Us</h4>
-                  <p className="text-ink/80 text-sm leading-relaxed">info@ksschool.org.in<br />admissions@ksschool.org.in</p>
+                  <p className="text-ink/80 text-sm leading-relaxed">{SCHOOL.email}</p>
                 </div>
               </div>
             </div>
@@ -105,14 +107,14 @@ const ContactRedesign = () => {
 
           {/* Right Column: Form */}
           <div className="lg:col-span-7">
-            <div className="bento-card bg-muted p-12 md:p-16 h-full flex flex-col">
+            <div className="bento-card bg-muted p-6 sm:p-10 md:p-16 h-full flex flex-col">
               {status === 'success' ? (
                 <div className="flex flex-col items-center justify-center h-full text-center space-y-6 animate-in fade-in zoom-in duration-500">
                    <div className="w-24 h-24 bg-accent/10 rounded-full flex items-center justify-center text-accent">
                       <CheckCircle2 size={48} />
                    </div>
                    <h3 className="text-3xl font-display font-bold text-ink">Message Sent!</h3>
-                   <p className="text-ink/60 max-w-sm">Thank you for reaching out. We've received your inquiry and will get back to you shortly.</p>
+                   <p className="text-ink/60 max-w-sm">Your inquiry has been submitted to the school. Please use the phone or email above if you need an urgent response.</p>
                    <button 
                      onClick={() => setStatus('idle')}
                      className="text-accent font-bold uppercase tracking-widest text-xs hover:underline decoration-2 underline-offset-8"
@@ -197,6 +199,7 @@ const ContactRedesign = () => {
         {/* Bottom Section: Horizontal Map */}
         <div className="w-full h-80 rounded-[40px] overflow-hidden shadow-2xl relative group">
           <iframe
+            title="KS School location"
             src="https://www.google.com/maps?q=23.0364395,72.5479925&z=17&output=embed"
             width="100%"
             height="100%"
@@ -206,8 +209,8 @@ const ContactRedesign = () => {
             referrerPolicy="no-referrer-when-downgrade"
           ></iframe>
           
-          <div className="absolute bottom-8 left-8 bg-white/90 backdrop-blur-md px-8 py-4 rounded-full shadow-lg flex items-center gap-4 z-10">
-            <MapPin className="text-accent" size={20} />
+          <div className="absolute bottom-4 left-4 right-4 sm:right-auto bg-white/90 backdrop-blur-md px-4 sm:px-8 py-4 rounded-full shadow-lg flex items-center gap-4 z-10">
+            <MapPin className="text-accent shrink-0" size={20} />
             <div>
               <p className="text-[10px] uppercase font-bold tracking-widest text-ink/60">Locate Us</p>
               <p className="font-bold text-ink">K.S. School, Ahmedabad</p>
@@ -216,7 +219,8 @@ const ContactRedesign = () => {
               href="https://www.google.com/maps?cid=17488788400827168217&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAMYASAF&hl=en-GB&source=embed" 
               target="_blank" 
               rel="noreferrer"
-              className="bg-white text-ink w-10 h-10 rounded-full flex items-center justify-center hover:bg-accent transition-colors ml-2"
+              aria-label="Open school location in Google Maps"
+              className="shrink-0 bg-white text-ink w-10 h-10 rounded-full flex items-center justify-center hover:bg-accent transition-colors ml-2"
             >
               <ExternalLink size={16} />
             </a>

@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useSchoolResource } from "@/hooks/use-school-resource";
+import { ResourceError } from "./resource-error";
+import React, { useEffect } from "react";
 import { usePathname } from 'next/navigation';
 import Link from "next/link";
 import { ArrowLeft, User, Mail, Award, BookOpen } from "lucide-react";
@@ -23,8 +25,6 @@ const deptMapping: Record<string, { dbCategory: string; title: string; descripti
 };
 
 const Faculty = ({ dept }: { dept?: string }) => {
-  const [faculty, setFaculty] = useState<FacultyMember[]>([]);
-  const [loading, setLoading] = useState(true);
 
   // If the server didn't pass a dept prop, derive it from the pathname (client-side fallback)
   const pathname = usePathname();
@@ -38,33 +38,10 @@ const Faculty = ({ dept }: { dept?: string }) => {
 
   const currentDept = derivedDept && deptMapping[derivedDept] ? deptMapping[derivedDept] : deptMapping['msc-it'];
 
-  // Debug logs to inspect incoming prop and resolved mapping
-  useEffect(() => {
-    console.log('[debug] Faculty component dept prop:', dept);
-    console.log('[debug] Faculty component pathname-derived dept:', derivedDept);
-    console.log('[debug] Faculty component currentDept:', currentDept);
-  }, [dept, derivedDept, currentDept]);
-
-  useEffect(() => {
-    const fetchFaculty = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch('/api/faculty');
-        const data = await res.json();
-        const allFaculty = data.faculty || data || [];
-        const filtered = allFaculty.filter((f: FacultyMember) => f.category === currentDept.dbCategory);
-        console.log('[debug] fetched faculty count', allFaculty.length, 'filtered count', filtered.length);
-        setFaculty(filtered);
-      } catch (err) {
-        console.error('Error fetching faculty:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    window.scrollTo(0, 0);
-    fetchFaculty();
-  }, [dept, currentDept.dbCategory]);
+  const resource = useSchoolResource<FacultyMember[]>("/api/faculty", "faculty");
+  const loading = resource.loading;
+  const faculty = (resource.data || []).filter(f => f.category === currentDept.dbCategory);
+  useEffect(() => { window.scrollTo(0, 0); }, [currentDept.dbCategory]);
 
   return (
     <div className="min-h-screen bg-white">
@@ -81,7 +58,7 @@ const Faculty = ({ dept }: { dept?: string }) => {
           <p className="text-xl text-ink/60 max-w-2xl font-medium">{currentDept.description}</p>
         </div>
 
-        {loading ? (
+        {resource.error ? <ResourceError retry={resource.retry} /> : loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {[1, 2, 3].map(i => (
               <div key={i} className="bento-card bg-muted/30 h-[500px] animate-pulse rounded-[2.5rem]" />

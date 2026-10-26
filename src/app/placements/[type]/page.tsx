@@ -1,7 +1,9 @@
 // src/app/placements/[type]/page.tsx
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { OFFICIAL_MEDIA } from "@/content/official-media";
+import { SCHOOL } from "@/content/school";
+import React, { useEffect } from "react";
 import { CurtainFooter } from "@/components/curtain-footer";
 import { motion } from "framer-motion";
 import Marquee from "@/components/ui/Marquee";
@@ -46,7 +48,7 @@ const programData: Record<PlacementType, ProgramData> = {
     shortTitle: "MBA",
     icon: Briefcase,
     tagline: "Management Excellence Since 1993",
-    hero: "https://picsum.photos/seed/mba-placement-hero/1400/900",
+    hero: OFFICIAL_MEDIA.mbaPlacement,
     intro:
       "Our Management graduates specialize in core business functions and are trained through real-world case studies, corporate presentations, and continuous industry exposure.",
     specializations: ["Finance", "Marketing", "Human Resources (HR)"],
@@ -63,55 +65,39 @@ const programData: Record<PlacementType, ProgramData> = {
       "Consumer Behavior",
       "Corporate Communication",
     ],
-    rolesOffered: [
-      "Management Trainee",
-      "Financial Analyst",
-      "Sales Executive",
-      "HR Specialist",
-      "Marketing Associate",
-    ],
+    rolesOffered: ["Projects", "Industry visits", "Presentations", "Practical learning"],
   },
   "m-sc-ca-it": {
     title: "Five-Year Integrated M.Sc. (CA & IT)",
     shortTitle: "M.Sc. (CA & IT)",
     icon: GraduationCap,
     tagline: "Technology Leaders of Tomorrow",
-    hero: "https://picsum.photos/seed/msc-placement-hero/1400/900",
+    hero: OFFICIAL_MEDIA.mscPlacement,
     intro:
       "Our Tech graduates undergo rigorous practical training, mastering foundational technologies, advanced networking, and hands-on software development.",
-    specializations: [
-      "Computer Applications",
-      "Information Technology",
-      "IoT & Cloud Frameworks",
-    ],
+    specializations: ["Artificial Intelligence & Machine Learning", "Web Technology", "Information Security"],
     curriculumFocus: [
       "Software Engineering",
       "Advanced Networking",
       "Software Project Management",
-      "Live IoT Projects",
+      "Live Projects",
     ],
     keySkills: [
       "Full-Stack Development",
       "Database Administration",
       "Systems Analysis",
-      "Data Science",
-      "Cloud Frameworks",
+      "Web Technology",
+      "Programming",
     ],
-    rolesOffered: [
-      "Software Engineer",
-      "Web Developer",
-      "IT Consultant",
-      "Systems Analyst",
-      "Network Administrator",
-    ],
+    rolesOffered: ["Projects", "Industry visits", "Presentations", "Practical learning"],
   },
 };
 
 const highlights = [
-  { label: "Average Package", value: "₹6.00", suffix: "LPA", icon: TrendingUp },
-  { label: "Highest Package", value: "₹18-19", suffix: "LPA", icon: Award },
-  { label: "Placement Success", value: "70-85", suffix: "%", icon: Users },
-  { label: "Recruitment Partners", value: "50", suffix: "+", icon: Building2 },
+  {label:"Integrated Programs",value:"2",suffix:"",icon:Building2},
+  {label:"Year Programs",value:"5",suffix:"",icon:Award},
+  {label:"Interview Preparation",value:"Mock",suffix:"",icon:Users},
+  {label:"Project Work",value:"Live",suffix:"",icon:TrendingUp},
 ];
 
 const placementProcess = [
@@ -120,7 +106,7 @@ const placementProcess = [
     icon: Mail,
     title: "Corporate Invitation",
     description:
-      "The Placement Cell reaches out to corporate partners with the annual Placement Brochure.",
+      "Placement cells help connect students and recruiting companies. Contact the school for current recruitment information.",
   },
   {
     step: "02",
@@ -134,58 +120,58 @@ const placementProcess = [
     icon: ClipboardList,
     title: "Student Profiling",
     description:
-      "Interested students submit their verified resumes to the placement portal.",
+      "Students prepare for recruitment through mock aptitude tests, group discussions and interviews.",
   },
   {
     step: "04",
     icon: UserCheck,
     title: "Screening & Selection",
     description:
-      "Recruitment drives are conducted on/off-campus involving Aptitude Tests, Group Discussions, and Technical/HR Interviews.",
+      "Selection stages and eligibility are determined by each recruiting company.",
   },
   {
     step: "05",
     icon: Handshake,
     title: "Final Offer",
     description:
-      "Selected students receive formal employment offers through the campus cell.",
+      "Recruiting companies determine final offers; the placement cell supports campus coordination.",
   },
 ];
 
 const recruiterCategories = [
   {
     category: "Banking & Finance",
-    companies: ["HDFC Bank", "Kotak Securities", "ICICI Bank", "SBI Life Insurance"],
+    companies: ["HDFC Bank", "Kotak Securities", "Indiabulls", "SBI Life Insurance"],
   },
   {
-    category: "Consulting & Professional Services",
-    companies: ["Deloitte", "KPMG"],
+    category: "Healthcare",
+    companies: ["Claris", "Prathama Blood Centre"],
   },
   {
     category: "Retail & FMCG",
-    companies: ["Amul", "Pantaloons", "Coca-Cola"],
+    companies: ["Amul", "Pantaloons"],
   },
   {
     category: "Media & Infrastructure",
-    companies: ["The Times of India", "Adani Group", "Torrent Power"],
+    companies: ["The Times of India", "Torrent Power"],
   },
 ];
 
 const marqueeLogos = [
-  "https://picsum.photos/seed/company1/300/120",
-  "https://picsum.photos/seed/company2/300/120",
-  "https://picsum.photos/seed/company3/300/120",
-  "https://picsum.photos/seed/company4/300/120",
-  "https://picsum.photos/seed/company5/300/120",
-  "https://picsum.photos/seed/company6/300/120",
-  "https://picsum.photos/seed/company7/300/120",
-  "https://picsum.photos/seed/company8/300/120",
+  "/images/official/recruiter-hdfc-bank.svg",
+  "/images/official/recruiter-amul.svg",
+  "/images/official/recruiter-torrent-power.svg",
+  "/images/official/recruiter-indiabulls.svg",
+  "/images/official/recruiter-sbi-life.svg",
+  "/images/official/recruiter-times-of-india.svg",
+  "/images/official/recruiter-pantaloons.svg",
+  "/images/official/recruiter-claris.svg",
 ];
 
 const contactInfo = {
   officer: "Placement Officer",
-  emails: ["placement@ksschool.org.in", "ksschool31@yahoo.co.in"],
-  phones: ["+91-79-26305972", "+91-79-26302119"],
+  emails: [SCHOOL.email],
+  phones: SCHOOL.phones,
   address:
     "K. S. School of Business Management, Gujarat University Campus, Navrangpura, Ahmedabad - 380009",
 };
@@ -195,11 +181,7 @@ export default function PlacementsDynamicPage({
 }: {
   params: Promise<{ type: string }>;
 }) {
-  const [type, setType] = useState<string>("");
-
-  useEffect(() => {
-    params.then((resolvedParams) => setType(resolvedParams.type));
-  }, [params]);
+  const { type } = React.use(params);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -341,11 +323,11 @@ export default function PlacementsDynamicPage({
                 Placement Highlights
               </p>
               <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
-                Numbers That Speak
+                From Campus to Corporate
               </h2>
             </div>
             <p className="text-zinc-400 max-w-md text-sm leading-relaxed">
-              Our dedication to bridging academics and industry needs is reflected in our consistent placement record.
+              The 2025 school brochure describes placement cells, practical learning and preparation for recruitment.
             </p>
           </motion.div>
 
@@ -359,11 +341,11 @@ export default function PlacementsDynamicPage({
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.1 }}
-                  className="bg-[#111111] p-8 lg:p-10 hover:bg-[#1a1a1a] transition-colors duration-300 group"
+                  className="bg-[#111111] p-5 sm:p-8 lg:p-10 hover:bg-[#1a1a1a] transition-colors duration-300 group"
                 >
                   <Icon className="w-7 h-7 text-[#e31e24] mb-6 opacity-80 group-hover:opacity-100 transition-opacity" strokeWidth={1.5} />
                   <div className="flex items-baseline gap-1 mb-2">
-                    <span className="text-4xl lg:text-5xl font-bold text-white tracking-tight">
+                    <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
                       {item.value}
                     </span>
                     <span className="text-xl font-semibold text-[#e31e24]">
@@ -479,9 +461,9 @@ export default function PlacementsDynamicPage({
                 </div>
               </div>
               
-              {/* Roles Offered - Full width inside this card */}
+              {/* Practical Exposure - Full width inside this card */}
               <div className="mt-10 pt-8 border-t border-zinc-200">
-                <h4 className="text-sm uppercase tracking-widest text-zinc-500 mb-4 font-semibold">Roles Offered</h4>
+                <h4 className="text-sm uppercase tracking-widest text-zinc-500 mb-4 font-semibold">Practical Exposure</h4>
                 <div className="flex flex-wrap gap-3">
                   {data.rolesOffered.map((role, i) => (
                     <span
@@ -568,11 +550,12 @@ export default function PlacementsDynamicPage({
             className="mb-16 text-center max-w-2xl mx-auto"
           >
             <p className="text-[#e31e24] font-bold uppercase tracking-[0.3em] text-[11px] mb-4">
-              Our Key Recruiters
+              Past MBA Recruiters
             </p>
             <h2 className="text-4xl md:text-5xl font-bold text-[#111111] tracking-tight">
-              Trusted by Industry Leaders
+              Recruiters in the School Archive
             </h2>
+            <p className="mt-4 text-sm text-zinc-500">Historical MBA recruiters listed on the official school website. These are not current placement guarantees or a verified M.Sc. recruiter list.</p>
           </motion.div>
 
           {/* Categorized Recruiters */}
@@ -643,21 +626,19 @@ export default function PlacementsDynamicPage({
               <Quote className="w-10 h-10 text-white" fill="currentColor" strokeWidth={0} />
             </div>
 
-            <blockquote className="text-3xl md:text-4xl font-serif italic text-white leading-relaxed mb-10 tracking-tight">
-              KSSBM takes pride in developing a diverse talent pool capable of
-              adding value to organizations from day one. We invite esteemed
-              organizations to collaborate with us for final placements and
-              summer internships. Experience the dedication and competence of
-              Gujarat University&apos;s top minds.
-            </blockquote>
+            <p className="text-3xl md:text-4xl font-serif italic text-white leading-relaxed mb-10 tracking-tight">
+              KS School offers integrated management and computing programs.
+              Contact the school for current recruitment arrangements,
+              internships and student profiles.
+            </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
               <a
-                href="#"
+                href={SCHOOL.brochure} target="_blank" rel="noreferrer"
                 className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-[#111111] text-sm font-bold rounded-full hover:bg-[#e31e24] hover:text-white transition-all duration-300 uppercase tracking-wider"
               >
                 <Download className="w-4 h-4" />
-                Download Placement Brochure
+                Download 2025 School Brochure
               </a>
               <a
                 href="#contact"

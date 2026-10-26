@@ -5,8 +5,8 @@ import { Nav } from "@/components/nav";
 
 export const metadata: Metadata = {
   title: "KS School of Business Management & Information Technology",
-  description: "Empowering minds through business excellence and cutting-edge technology education. Explore BBA, BCA, MBA, MCA and more at KS School.",
-  keywords: ["KS School", "Business Management", "Information Technology", "BBA", "BCA", "MBA", "MCA", "Education"],
+  description: "Empowering minds through business excellence and cutting-edge technology education. Explore five-year integrated MBA and M.Sc. (CA & IT) programs at KS School, Gujarat University.",
+  keywords: ["KS School", "Business Management", "Information Technology", "BBA", "BSc", "MBA", "MSc", "Education"],
   authors: [{ name: "KS School" }],
   icons: {
     icon: "/ks-logo.png",

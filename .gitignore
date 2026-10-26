@@ -12,6 +12,7 @@ node_modules
 
 # testing
 /coverage
+/.browser-check/
 
 # next.js
 /.next/

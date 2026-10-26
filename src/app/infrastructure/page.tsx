@@ -1,5 +1,5 @@
 import Infrastructure from "../../components/infrastructure";
 
 export default function Page() {
-  return <Infrastructure />;
+  return <main className="pt-20"><Infrastructure /></main>;
 }

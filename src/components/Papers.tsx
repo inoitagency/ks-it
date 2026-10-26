@@ -1,5 +1,7 @@
 "use client";
 
+import { useSchoolResource } from "@/hooks/use-school-resource";
+import { ResourceError } from "./resource-error";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { FileText, Download, Filter, Calendar, GraduationCap, Briefcase, ArrowLeft } from "lucide-react";
@@ -17,8 +19,9 @@ interface Paper {
 }
 
 const Papers = () => {
-  const [papers, setPapers] = useState<Paper[]>([]);
-  const [loading, setLoading] = useState(true);
+  const resource = useSchoolResource<Paper[]>("/api/oldPapers/getByCategory/All", "oldPaper");
+  const papers = resource.data || [];
+  const loading = resource.loading;
 
   // Filter States
   const [selectedDept, setSelectedDept] = useState("All");
@@ -26,24 +29,7 @@ const Papers = () => {
   const [selectedYear, setSelectedYear] = useState("All");
   const [selectedExamType, setSelectedExamType] = useState("All");
 
-  useEffect(() => {
-    const fetchPapers = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch("/api/oldPapers/getByCategory/All");
-        const data = await res.json();
-        const allPapers = data.oldPaper || data.oldPapers || data.papers || [];
-        setPapers(Array.isArray(allPapers) ? allPapers : []);
-      } catch (err) {
-        console.error("Error fetching papers:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPapers();
-    window.scrollTo(0, 0);
-  }, []);
+  useEffect(() => { window.scrollTo(0, 0); }, []);
 
   const departments = ["All", ...Array.from(new Set(papers.map(p => p.category))).filter(Boolean)];
   const deptFiltered = papers.filter(p => selectedDept === "All" || p.category === selectedDept);
@@ -129,13 +115,13 @@ const Papers = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {loading ? (
+          {resource.error ? <ResourceError retry={resource.retry} /> : loading ? (
             [1,2,3,4].map(i => (
               <div key={i} className="bento-card bg-muted/30 h-32 animate-pulse rounded-2xl" />
             ))
           ) : filteredPapers.length > 0 ? (
             filteredPapers.map((paper) => (
-              <div key={paper._id} className="bento-card group hover:bg-white border-black/5 transition-all duration-500 flex items-center justify-between p-8">
+              <div key={paper._id} className="bento-card group hover:bg-white border-black/5 transition-all duration-500 flex flex-wrap gap-4 items-center justify-between p-5 sm:p-8">
                 <div className="flex items-center gap-6">
                   <div className="w-14 h-14 rounded-2xl bg-accent/10 text-accent flex items-center justify-center transition-transform group-hover:scale-110">
                     <FileText size={28} />

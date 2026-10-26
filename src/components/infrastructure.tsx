@@ -1,5 +1,6 @@
 "use client";
 
+import { OFFICIAL_MEDIA } from "@/content/official-media";
 import React, { useState, useEffect, startTransition, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
@@ -11,28 +12,28 @@ const ITEMS = [
     label: "Innovation",
     title: "Laboratory",
     desc: "Advanced labs designed for innovation, scientific discovery, and hands-on learning with state-of-the-art equipment.",
-    img: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?q=80&w=1200",
+    img: OFFICIAL_MEDIA.facilityLab,
   },
   {
     id: "library",
     label: "Resource",
     title: "The Library",
     desc: "A vast collection of knowledge, digital archives, and peaceful study spaces designed for deep focus.",
-    img: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=1200",
+    img: OFFICIAL_MEDIA.facilityLibrary,
   },
   {
     id: "auditorium",
     label: "Community",
-    title: "Auditorium",
-    desc: "A grand architectural space hosting guest lectures, cultural programs, and student gatherings.",
-    img: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=1200",
+    title: "Seminar Space",
+    desc: "A space for academic talks, guest lectures and shared learning at KS School.",
+    img: OFFICIAL_MEDIA.facilitySeminar,
   },
   {
     id: "classroom",
     label: "Academics",
-    title: "Smart Classrooms",
+    title: "Learning Spaces",
     desc: "Modern, tech-enabled classrooms built for interactive learning and collaborative problem solving.",
-    img: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=1200",
+    img: OFFICIAL_MEDIA.facilityLearning,
   },
 ];
 
@@ -109,8 +110,8 @@ const Infrastructure = () => {
         
         {/* BACKGROUND IMAGE */}
         <div className="absolute inset-0 z-0">
-            <img 
-                src="https://ksschool.org.in/img/slides/1_Updated.jpg" 
+            <img loading="lazy" decoding="async"
+                src={OFFICIAL_MEDIA.campus}
                 alt="Campus Background" 
                 className="w-full h-full object-cover"
             />
@@ -181,7 +182,7 @@ const Infrastructure = () => {
                     onClick={() => setActive(item)}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <img src={item.img} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <img loading="lazy" decoding="async" src={item.img} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                     <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors" />
                     <div className="absolute bottom-2 left-2">
                        <span className="block text-[9px] uppercase tracking-widest text-white/60 mb-0.5">{item.label}</span>
@@ -223,7 +224,7 @@ const Infrastructure = () => {
                       className="relative w-20 h-12 rounded-lg overflow-hidden"
                       animate={{ opacity: active ? 0 : 1 }}
                     >
-                      <img src={item.img} className="w-full h-full object-cover" />
+                      <img loading="lazy" decoding="async" src={item.img} alt={item.title} className="w-full h-full object-cover" />
                       <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
                     </motion.div>
                   </motion.div>
@@ -252,7 +253,7 @@ const Infrastructure = () => {
                 layoutId={`card-${active.id}`}
                 className="relative w-full md:w-2/3 h-[50vh] md:h-full bg-neutral-900" // Mobile height reduced slightly
               >
-                <img 
+                <img loading="lazy" decoding="async"
                   src={active.img} 
                   className="w-full h-full object-cover"
                   alt={active.title}

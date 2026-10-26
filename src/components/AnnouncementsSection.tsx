@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import { useSchoolResource } from "@/hooks/use-school-resource";
+import { ResourceError } from "./resource-error";
+import React, { useState } from 'react';
 import { ExternalLink, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -96,45 +98,19 @@ const AnnouncementCard = ({ item }: { item: Announcement }) => {
 };
 
 const AnnouncementsSection = () => {
-  const [generalItems, setGeneralItems] = useState<Announcement[]>([]);
-  const [mbaItems, setMbaItems] = useState<Announcement[]>([]);
-  const [mscItems, setMscItems] = useState<Announcement[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchAll = async () => {
-      setLoading(true);
-      try {
-        const [gen, mba, msc] = await Promise.all([
-          fetch('/api/announcements/all/General'),
-          fetch('/api/announcements/all/MBA'),
-          fetch('/api/announcements/all/MSCIT')
-        ]);
-
-        const genData = await gen.json();
-        const mbaData = await mba.json();
-        const mscData = await msc.json();
-
-        setGeneralItems(Array.isArray(genData) ? genData : genData.announcement || genData.announcements || genData.data || []);
-        setMbaItems(Array.isArray(mbaData) ? mbaData : mbaData.announcement || mbaData.announcements || mbaData.data || []);
-        setMscItems(Array.isArray(mscData) ? mscData : mscData.announcement || mscData.announcements || mscData.data || []);
-      } catch (err) {
-        console.error("Announcements fetch error:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAll();
-  }, []);
-
+  const general = useSchoolResource<Announcement[]>('/api/announcements/all/General','announcement');
+  const mba = useSchoolResource<Announcement[]>('/api/announcements/all/MBA','announcement');
+  const msc = useSchoolResource<Announcement[]>('/api/announcements/all/MSCIT','announcement');
+  const generalItems = general.data || [];
+  const mbaItems = mba.data || [];
+  const mscItems = msc.data || [];
   const sortItems = (items: Announcement[]) => 
     [...items].sort((a, b) => 
       (b.isNewAnnouncement ? 1 : 0) - (a.isNewAnnouncement ? 1 : 0) || 
       new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
 
-  const renderColumn = (title: string, items: Announcement[], emptyText: string) => (
+  const renderColumn = (title: string, items: Announcement[], emptyText: string, resource: typeof general) => (
     <div className="flex flex-col h-full">
       <div className="flex justify-between items-center mb-6 pb-4 border-b border-black/10">
         <h3 className="font-semibold text-xl">{title}</h3>
@@ -142,7 +118,7 @@ const AnnouncementsSection = () => {
       </div>
 
       <div className="flex-1 space-y-4 overflow-y-auto custom-scrollbar pr-2" style={{ maxHeight: '620px' }}>
-        {loading ? (
+        {resource.error ? <ResourceError retry={resource.retry} /> : resource.loading ? (
           Array(3).fill(0).map((_, i) => (
             <div key={i} className="h-40 bg-black/5 rounded-2xl animate-pulse" />
           ))
@@ -168,9 +144,9 @@ const AnnouncementsSection = () => {
 </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-          {renderColumn("General Updates", generalItems, "No general announcements")}
-          {renderColumn("M.Sc. (CA & IT)", mscItems, "No M.Sc announcements")}
-          {renderColumn("MBA", mbaItems, "No MBA announcements")}
+          {renderColumn("General Updates", generalItems, "No general announcements", general)}
+          {renderColumn("M.Sc. (CA & IT)", mscItems, "No M.Sc announcements", msc)}
+          {renderColumn("MBA", mbaItems, "No MBA announcements", mba)}
         </div>
       </div>
 

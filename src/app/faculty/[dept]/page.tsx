@@ -5,3 +5,4 @@ export default async function FacultyDeptPage({ params }: { params: Promise<{ de
   const dept = resolved?.dept;
   return <Faculty dept={dept} />;
 }
+  

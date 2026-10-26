@@ -60,9 +60,10 @@ export const ScrollFloat = ({
     });
 
     return () => {
+      tween.scrollTrigger?.kill();
       tween.kill();
     };
-  }, [stagger]);
+  }, [stagger, children]);
 
   return (
     <h2 ref={containerRef} className={`sf-container ${className}`}>

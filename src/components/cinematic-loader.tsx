@@ -12,25 +12,30 @@ import { motion, AnimatePresence } from "framer-motion";
    ────────────────────────────────────────────── */
 
 const CURTAIN_OPEN_MS = 1600;
-const LOADER_TOTAL_MS = 2400;
+const LOADER_TOTAL_MS = 2600;
 
-export const CinematicLoader = () => {
+export const CinematicLoader = ({ onComplete }: { onComplete?: () => void }) => {
   const [phase, setPhase] = useState<"intro" | "exit" | "done">("intro");
 
   useEffect(() => {
     const t1 = setTimeout(() => setPhase("exit"), CURTAIN_OPEN_MS);
-    const t2 = setTimeout(() => setPhase("done"), LOADER_TOTAL_MS);
+    const t2 = setTimeout(() => {
+      setPhase("done");
+      onComplete?.();
+    }, LOADER_TOTAL_MS);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
     };
-  }, []);
+  }, [onComplete]);
 
   return (
     <AnimatePresence>
       {phase !== "done" && (
         <motion.div
-          className="fixed inset-0 z-[90] overflow-hidden"
+          data-testid="home-loader"
+          aria-label="Welcome to KS School"
+          className="fixed inset-0 z-[1000] overflow-hidden"
           exit={{ opacity: 0 }}
           transition={{ duration: 0.05 }}
         >

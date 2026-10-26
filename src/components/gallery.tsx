@@ -3,6 +3,8 @@
 import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import { useSceneImages } from "@/hooks/use-scene-images";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight } from "lucide-react";
 import GalleryModal from "./gallery-modal";
@@ -21,13 +23,15 @@ gsap.registerPlugin(ScrollTrigger);
 
 export const Gallery = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+  useSceneImages(sectionRef, isDesktop);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const el = sectionRef.current;
-    if (!el) return;
+    if (!el || isDesktop === null) return;
 
-    const isMobile = window.innerWidth < 768;
+    const isMobile = !isDesktop;
 
     const ctx = gsap.context(() => {
       if (isMobile) {
@@ -113,11 +117,16 @@ export const Gallery = () => {
       );
     }, el);
 
-    return () => ctx.revert();
-  }, []);
+    const refresh = requestAnimationFrame(() => ScrollTrigger.refresh());
+    return () => {
+      cancelAnimationFrame(refresh);
+      ctx.revert();
+    };
+  }, [isDesktop]);
 
   return (
     <section ref={sectionRef} className="relative bg-white py-24 px-6 md:py-0">
+      {isDesktop !== true && <>
       {/* Mobile heading */}
       <motion.div
         className="mb-12 md:hidden"
@@ -143,7 +152,10 @@ export const Gallery = () => {
         ))}
       </div>
 
+      </>}
+
       {/* Desktop: Pinned corner-to-bento animation */}
+      {isDesktop !== false && (
       <div className="hidden md:block" style={{ height: "300vh" }}>
         <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden bg-white">
           {/* Center text */}
@@ -197,10 +209,13 @@ export const Gallery = () => {
         </div>
       </div>
 
+      )}
+
       {/* Gallery modal (route-less overlay) — receives the whole item,
           so its own `images` array drives the carousel */}
       {openIndex !== null && (
         <GalleryModal
+          key={openIndex}
           isOpen={openIndex !== null}
           onClose={() => setOpenIndex(null)}
           item={GALLERY_ITEMS[openIndex]}
@@ -214,9 +229,10 @@ export const Gallery = () => {
 const GalleryCard = ({ item, onOpen }: { item: GalleryItem; onOpen?: () => void }) => {
   return (
     <div className="gal-card group relative h-full w-full cursor-pointer">
-      <img
+      <img loading="lazy" decoding="async"
         src={item.img}
         alt={item.title}
+        style={{ objectPosition: item.tag === "Library" ? "left center" : undefined }}
         className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
         referrerPolicy="no-referrer"
       />

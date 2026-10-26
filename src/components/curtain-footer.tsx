@@ -3,18 +3,54 @@
 
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import { useLayoutEffect, useRef } from "react";
+import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
 
 /* -----------------------------------------------
-   CURTAIN FOOTER - Clean & Fixed Layout
+   CURTAIN FOOTER - Measured reveal in document flow
    ----------------------------------------------- */
 export const CurtainFooter = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const panelHeight = useMotionValue(0);
+  const revealDistance = useMotionValue(0);
+  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start end", "end end"] });
+  const y = useTransform([scrollYProgress, panelHeight, revealDistance], ([progress, height, distance]) =>
+    Math.min(0, Number(progress) * Number(height) - Number(distance))
+  );
+
+  useLayoutEffect(() => {
+    const panel = panelRef.current;
+    if (!panel) return;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const measure = () => {
+      const height = panel.offsetHeight;
+      panelHeight.set(height);
+      // A tall footer finishes revealing before normal page scrolling exposes the rest.
+      // This keeps every link reachable in short windows without a nested scroll area.
+      revealDistance.set(window.innerWidth >= 768 && !reducedMotion.matches
+        ? Math.min(height, Math.max(0, window.innerHeight - 96))
+        : 0);
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(panel);
+    window.addEventListener("resize", measure);
+    reducedMotion.addEventListener("change", measure);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", measure);
+      reducedMotion.removeEventListener("change", measure);
+    };
+  }, [panelHeight, revealDistance]);
+
   return (
     <div
-      className="relative md:h-[800px] h-auto"
-      style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
+      ref={containerRef}
+      className="curtain-footer relative overflow-hidden bg-[#0a0a0a]"
     >
-      <div className="w-full md:fixed md:bottom-0 md:h-[700px]">
-        <div className="bg-[#0a0a0a] text-[#a1a1aa] h-full flex flex-col justify-between p-8 md:p-16 lg:p-24">
+      <motion.div ref={panelRef} className="curtain-footer-panel relative w-full" style={{ y }}>
+        <div className="bg-[#0a0a0a] text-[#a1a1aa] flex flex-col gap-12 justify-between p-8 pb-16 md:p-16 lg:p-24">
 
           {/* Grain texture */}
           <div className="absolute inset-0 opacity-[0.04] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat pointer-events-none" />
@@ -51,9 +87,9 @@ export const CurtainFooter = () => {
             <div>
               <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-600 mb-4">Campus</p>
               <div className="space-y-3">
-                <a href="#infrastructure" className="block text-base text-zinc-400 hover:text-white transition-colors">Infrastructure</a>
-                <a href="#infrastructure" className="block text-base text-zinc-400 hover:text-white transition-colors">Labs</a>
-                <a href="#infrastructure" className="block text-base text-zinc-400 hover:text-white transition-colors">Auditorium</a>
+                <Link href="/infrastructure" className="block text-base text-zinc-400 hover:text-white transition-colors">Infrastructure</Link>
+                <Link href="/infrastructure?open=lab" className="block text-base text-zinc-400 hover:text-white transition-colors">Labs</Link>
+                <Link href="/infrastructure?open=auditorium" className="block text-base text-zinc-400 hover:text-white transition-colors">Seminar Space</Link>
               </div>
             </div>
 
@@ -72,17 +108,14 @@ export const CurtainFooter = () => {
             <p className="text-[10px] uppercase tracking-[0.2em] text-zinc-700">
               &copy; 2026 KS School of Business Management &amp; IT. All rights reserved.
             </p>
-          <p className="text-sm md:text-base text-zinc-400 mt-2 font-medium">
-                  Made by <span className="text-white">RAJ &amp; MANAV</span>
-                </p>
-            <div className="flex gap-6 text-xl">
-              {["Instagram", "LinkedIn", "YouTube"].map((s) => (
+            <div className="flex flex-wrap justify-center gap-4 text-sm">
+              {[{label:"Instagram",url:"https://www.instagram.com/kssbm_gujarat_university?r=nametag"},{label:"Facebook",url:"https://www.facebook.com/KSSBM-110829864378413/"},{label:"YouTube",url:"https://www.youtube.com/channel/UCSi6ShcLabKp_Rrkivh6xYA"}].map((s) => (
                 <a
-                  key={s}
-                  href="#"
+                  key={s.label}
+                  href={s.url} target="_blank" rel="noreferrer"
                   className="group hover:text-white transition-colors duration-300 flex items-center gap-1"
                 >
-                  {s}
+                  {s.label}
                   <ArrowUpRight size={18} className="opacity-0 group-hover:opacity-100 transition-opacity" />
                 </a>
               ))}
@@ -90,7 +123,13 @@ export const CurtainFooter = () => {
           </div>
 
         </div>
-      </div>
+        <p className="absolute bottom-4 right-6 z-10 text-right text-[10px] text-zinc-500 sm:text-xs">
+          Made by{" "}
+          <a href="https://github.com/Rajchandel1" target="_blank" rel="noopener noreferrer" className="text-zinc-300 transition-colors hover:text-white focus-visible:underline">RAJ</a>
+          {" "}&amp;{" "}
+          <a href="https://github.com/manavchawla146/" target="_blank" rel="noopener noreferrer" className="text-zinc-300 transition-colors hover:text-white focus-visible:underline">MANAV</a>
+        </p>
+      </motion.div>
     </div>
   );
 };

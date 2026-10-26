@@ -2,7 +2,10 @@
 
 import { useRef, useEffect, ReactNode } from "react";
 import { motion } from "framer-motion";
+import { LEADERSHIP } from "@/content/school";
 import gsap from "gsap";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import { useSceneImages } from "@/hooks/use-scene-images";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -16,27 +19,26 @@ gsap.registerPlugin(ScrollTrigger);
    ----------------------------------------------- */
 export const HODs = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+  useSceneImages(sectionRef, isDesktop);
 
   useEffect(() => {
     const el = sectionRef.current;
-    if (!el) return;
+    if (!el || isDesktop === null) return;
 
-    const isMobile = window.innerWidth < 768;
+    const isMobile = !isDesktop;
 
     const ctx = gsap.context(() => {
       if (isMobile) {
-        // Mobile: Simple stagger
-        gsap.set('.hod-card-item', { y: 40, opacity: 0 });
-        gsap.to('.hod-card-item', {
-          y: 0,
-          opacity: 1,
-          stagger: 0.15,
-          duration: 0.6,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: el,
-            start: 'top 75%',
-          },
+        // Photo, name and role share one reveal; images cannot expand the card later.
+        gsap.utils.toArray<HTMLElement>('.hod-card-wrapper', el).forEach((card) => {
+          gsap.fromTo(card, { y: 40, autoAlpha: 0 }, {
+            y: 0,
+            autoAlpha: 1,
+            duration: 0.6,
+            ease: 'power2.out',
+            scrollTrigger: { trigger: card, start: 'top 90%', once: true },
+          });
         });
         return;
       }
@@ -109,12 +111,17 @@ export const HODs = () => {
 
     }, el);
 
-    return () => ctx.revert();
-  }, []);
+    const refresh = requestAnimationFrame(() => ScrollTrigger.refresh());
+    return () => {
+      cancelAnimationFrame(refresh);
+      ctx.revert();
+    };
+  }, [isDesktop]);
 
   return (
     <section
       ref={sectionRef}
+      id="people-behind"
       className="relative bg-gradient-to-br from-zinc-50 via-white to-zinc-100 overflow-hidden"
     >
       {/* Decorative SVG Background */}
@@ -159,7 +166,8 @@ export const HODs = () => {
       </div>
 
       {/* --- MOBILE LAYOUT --- */}
-      <div className="relative flex flex-col items-center gap-8 py-20 md:hidden">
+      {isDesktop !== true && (
+      <div className="leadership-mobile relative flex flex-col items-center gap-8 py-20">
         <motion.p
           className="relative mb-6 text-center text-xs font-light uppercase tracking-[0.5em] text-zinc-500"
           initial={{ opacity: 0, y: 20 }}
@@ -173,29 +181,32 @@ export const HODs = () => {
           </span>
         </motion.p>
         <HODCard
-          name="Dr. Neerja A. Gupta"
-          role={<>Vice Chancellor<br/>(Gujarat University)</>}
-          img={encodeURI('/assets/Dr. Neerja A. Gupta.jpg')}
+          name={LEADERSHIP[0].name}
+          role={<>{LEADERSHIP[0].role}<br />{LEADERSHIP[0].affiliation}</>}
+          img={LEADERSHIP[0].image}
           mobile
         />
         <HODCard
-          name="Dr. Paavan Pandit"
-          role="Dean & Director"
-          img={encodeURI('/assets/Dr._Paavan_Pandit.jpg')}
+          name={LEADERSHIP[1].name}
+          role={<>{LEADERSHIP[1].role}<br />{LEADERSHIP[1].affiliation}</>}
+          img={LEADERSHIP[1].image}
           isMain
           mobile
         />
         <HODCard
-          name="Dr. Piyush M Patel"
-          role="Registrar (I/C)"
-          img={encodeURI('/assets/Dr. Piyush M Patel.jpg')}
+          name={LEADERSHIP[2].name}
+          role={<>{LEADERSHIP[2].role}<br />{LEADERSHIP[2].affiliation}</>}
+          img={LEADERSHIP[2].image}
           mobile
         />
         
       </div>
 
+      )}
+
       {/* --- DESKTOP LAYOUT --- */}
-      <div className="hidden md:block h-screen w-full relative">
+      {isDesktop !== false && (
+      <div className="leadership-desktop h-screen w-full relative">
         
         {/* 
            The "Hero" Text 
@@ -212,7 +223,7 @@ export const HODs = () => {
            The Cards Container 
            z-30: Higher than text (z-10), ensuring images are ON TOP during scroll
         */}
-        <div className="absolute inset-0 flex items-center justify-center z-30">
+        <div className="hod-stage absolute inset-0 flex items-center justify-center z-30">
           
           <div className="relative h-full w-full flex items-center justify-center">
             
@@ -222,9 +233,9 @@ export const HODs = () => {
               style={{ marginLeft: '-310px', zIndex: 5 }}
             >
               <HODCard
-                name="Dr. Neerja A. Gupta"
-                role={<>Vice Chancellor<br/>(Gujarat University)</>}
-                img={encodeURI('/assets/Dr. Neerja A. Gupta.jpg')}
+                name={LEADERSHIP[0].name}
+                role={<>{LEADERSHIP[0].role}<br />{LEADERSHIP[0].affiliation}</>}
+                img={LEADERSHIP[0].image}
               />
             </div>
 
@@ -234,9 +245,9 @@ export const HODs = () => {
               style={{ zIndex: 10 }}
             >
               <HODCard
-                name="Dr. Paavan Pandit"
-                role="Dean & Director"
-                img={encodeURI('/assets/Dr._Paavan_Pandit.jpg')}
+                name={LEADERSHIP[1].name}
+                role={<>{LEADERSHIP[1].role}<br />{LEADERSHIP[1].affiliation}</>}
+                img={LEADERSHIP[1].image}
                 isMain
               />
             </div>
@@ -247,15 +258,16 @@ export const HODs = () => {
               style={{ marginLeft: '310px', zIndex: 5 }}
             >
               <HODCard
-                name="Dr. Piyush M Patel"
-                role="Registrar (I/C)"
-                img={encodeURI('/assets/Dr. Piyush M Patel.jpg')}
+                name={LEADERSHIP[2].name}
+                role={<>{LEADERSHIP[2].role}<br />{LEADERSHIP[2].affiliation}</>}
+                img={LEADERSHIP[2].image}
               />
             </div>
 
           </div>
         </div>
       </div>
+      )}
     </section>
   );
 };
@@ -276,9 +288,9 @@ const HODCard = ({
   isMain?: boolean;
   mobile?: boolean;
 }) => (
-  <div className="hod-card-wrapper hod-card-item group text-center">
+  <div className="hod-card-wrapper hod-card-item group text-center" style={mobile ? { width: isMain ? 240 : 200, maxWidth: 'calc(100vw - 3rem)' } : undefined}>
     <div
-      className={`relative overflow-hidden rounded-2xl transition-all duration-500 ${
+      className={`relative aspect-[3/4] overflow-hidden rounded-2xl transition-all duration-500 ${
         isMain
           ? 'shadow-2xl shadow-amber-100/40 ring-1 ring-amber-200/30'
           : 'shadow-xl shadow-zinc-200/30 ring-1 ring-zinc-200/30'
@@ -291,11 +303,12 @@ const HODCard = ({
       <div className="absolute bottom-2 left-2 h-3 w-3 border-b border-l border-amber-300/0 transition-all duration-300 group-hover:border-amber-300/40" />
       <div className="absolute bottom-2 right-2 h-3 w-3 border-b border-r border-amber-300/0 transition-all duration-300 group-hover:border-amber-300/40" />
       
-      <img
+      <img loading="lazy" decoding="async"
         src={img}
         alt={name}
-        className={`hod-card-photo w-full object-cover transition-all duration-700 group-hover:scale-105 aspect-[3/4]`}
-        style={mobile ? { width: isMain ? '240px' : '200px' } : undefined}
+        className="hod-card-photo absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+        width={300}
+        height={400}
         referrerPolicy="no-referrer"
       />
       

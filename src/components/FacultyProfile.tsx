@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useSchoolResource } from "@/hooks/use-school-resource";
+import { ResourceError } from "./resource-error";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { ArrowLeft, Mail, Award, BookOpen, GraduationCap, Briefcase, FileText, Globe } from "lucide-react";
 import { CurtainFooter } from "./curtain-footer";
@@ -22,28 +24,12 @@ interface FacultyMember {
 }
 
 const FacultyProfile = ({ id }: { id?: string }) => {
-  const [member, setMember] = useState<FacultyMember | null>(null);
-  const [loading, setLoading] = useState(true);
+  const resource = useSchoolResource<FacultyMember>(id ? '/api/faculty/' + encodeURIComponent(id) : null, 'faculty');
+  const member = resource.data;
+  const loading = resource.loading;
+  useEffect(() => { window.scrollTo(0, 0); }, [id]);
+  if (resource.error) return <main className="pt-32 px-6 max-w-7xl mx-auto"><ResourceError retry={resource.retry} /></main>;
 
-  useEffect(() => {
-    const fetchMember = async () => {
-      setLoading(true);
-      try {
-        console.log('[debug] FacultyProfile fetching id:', id);
-        const res = await fetch(`/api/faculty/${id}`);
-        const data = await res.json();
-        console.log('[debug] FacultyProfile response:', data);
-        setMember(data.faculty || null);
-      } catch (err) {
-        console.error('Error fetching faculty details:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    window.scrollTo(0, 0);
-    if (id) fetchMember();
-  }, [id]);
 
   if (loading) {
     return (

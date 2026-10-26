@@ -1,0 +1,464 @@
+[
+  {
+    "url": "https://ksschool.org.in/advent/images/1.jpg",
+    "alt": "Advent",
+    "name": "advent-1",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/advent-1.webp",
+    "width": 1024,
+    "height": 623,
+    "bytes": 214898
+  },
+  {
+    "url": "https://ksschool.org.in/advent/images/2.jpg",
+    "alt": "Advent",
+    "name": "advent-2",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/advent-2.webp",
+    "width": 680,
+    "height": 1024,
+    "bytes": 135888
+  },
+  {
+    "url": "https://ksschool.org.in/advent/images/3.jpg",
+    "alt": "Advent",
+    "name": "advent-3",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/advent-3.webp",
+    "width": 1024,
+    "height": 680,
+    "bytes": 173192
+  },
+  {
+    "url": "https://ksschool.org.in/images/Technomantra/1.jpg",
+    "alt": "Technomantra",
+    "name": "technomantra-1",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/technomantra-1.webp",
+    "width": 1024,
+    "height": 683,
+    "bytes": 65758
+  },
+  {
+    "url": "https://ksschool.org.in/images/Technomantra/2.jpg",
+    "alt": "Technomantra",
+    "name": "technomantra-2",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/technomantra-2.webp",
+    "width": 1024,
+    "height": 683,
+    "bytes": 208842
+  },
+  {
+    "url": "https://ksschool.org.in/images/Technomantra/3.jpg",
+    "alt": "Technomantra",
+    "name": "technomantra-3",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/technomantra-3.webp",
+    "width": 1024,
+    "height": 683,
+    "bytes": 185610
+  },
+  {
+    "url": "https://ksschool.org.in/images/Melange/1.jpg",
+    "alt": "Melange",
+    "name": "melange-1",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/melange-1.webp",
+    "width": 1024,
+    "height": 680,
+    "bytes": 182200
+  },
+  {
+    "url": "https://ksschool.org.in/images/Melange/2.jpg",
+    "alt": "Melange",
+    "name": "melange-2",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/melange-2.webp",
+    "width": 680,
+    "height": 1024,
+    "bytes": 98674
+  },
+  {
+    "url": "https://ksschool.org.in/images/Melange/3.jpg",
+    "alt": "Melange",
+    "name": "melange-3",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/melange-3.webp",
+    "width": 1024,
+    "height": 680,
+    "bytes": 139482
+  },
+  {
+    "url": "https://ksschool.org.in/images/seminar/1.jpg",
+    "alt": "Seminar",
+    "name": "seminar-1",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/seminar-1.webp",
+    "width": 1024,
+    "height": 768,
+    "bytes": 123828
+  },
+  {
+    "url": "https://ksschool.org.in/images/seminar/2.jpg",
+    "alt": "Seminar",
+    "name": "seminar-2",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/seminar-2.webp",
+    "width": 1024,
+    "height": 768,
+    "bytes": 96886
+  },
+  {
+    "url": "https://ksschool.org.in/images/seminar/3.jpg",
+    "alt": "Seminar",
+    "name": "seminar-3",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/seminar-3.webp",
+    "width": 1024,
+    "height": 768,
+    "bytes": 113346
+  },
+  {
+    "name": "campus",
+    "url": "https://ksschool.org.in/img/slides/1_Updated.jpg",
+    "page": "https://ksschool.org.in/",
+    "local": "/images/official/campus.webp",
+    "width": 1400,
+    "height": 511,
+    "bytes": 135940
+  },
+  {
+    "name": "students",
+    "url": "https://ksschool.org.in/img/slides/ksstudentdelhi.jpg",
+    "page": "https://ksschool.org.in/",
+    "local": "/images/official/students.webp",
+    "width": 1400,
+    "height": 511,
+    "bytes": 138004
+  },
+  {
+    "name": "alumni",
+    "url": "https://ksschool.org.in/img/slides/ksalumni.jpg",
+    "page": "https://ksschool.org.in/",
+    "local": "/images/official/alumni.webp",
+    "width": 1400,
+    "height": 511,
+    "bytes": 101992
+  },
+  {
+    "name": "library-1",
+    "url": "https://ksschool.org.in/img/lp1.jpg",
+    "page": "https://ksschool.org.in/Libraryinfo.php",
+    "local": "/images/official/library-1.webp",
+    "width": 1400,
+    "height": 420,
+    "bytes": 58746
+  },
+  {
+    "name": "library-2",
+    "url": "https://ksschool.org.in/img/lp2.jpg",
+    "page": "https://ksschool.org.in/Libraryinfo.php",
+    "local": "/images/official/library-2.webp",
+    "width": 1400,
+    "height": 420,
+    "bytes": 52862
+  },
+  {
+    "name": "library-3",
+    "url": "https://ksschool.org.in/img/lp3.jpg",
+    "page": "https://ksschool.org.in/Libraryinfo.php",
+    "local": "/images/official/library-3.webp",
+    "width": 1400,
+    "height": 420,
+    "bytes": 76574
+  },
+  {
+    "name": "campus-1",
+    "url": "https://ksschool.org.in/img/AboutUs/1.jpg",
+    "page": "https://ksschool.org.in/AboutUs.php",
+    "local": "/images/official/campus-1.webp",
+    "width": 1400,
+    "height": 420,
+    "bytes": 117874
+  },
+  {
+    "name": "campus-2",
+    "url": "https://ksschool.org.in/img/AboutUs/2.jpg",
+    "page": "https://ksschool.org.in/AboutUs.php",
+    "local": "/images/official/campus-2.webp",
+    "width": 1400,
+    "height": 420,
+    "bytes": 46502
+  },
+  {
+    "name": "campus-3",
+    "url": "https://ksschool.org.in/img/AboutUs/3.png",
+    "page": "https://ksschool.org.in/AboutUs.php",
+    "local": "/images/official/campus-3.webp",
+    "width": 1400,
+    "height": 788,
+    "bytes": 256486
+  },
+  {
+    "name": "campus-4",
+    "url": "https://ksschool.org.in/img/AboutUs/4.png",
+    "page": "https://ksschool.org.in/AboutUs.php",
+    "local": "/images/official/campus-4.webp",
+    "width": 1400,
+    "height": 788,
+    "bytes": 262492
+  },
+  {
+    "name": "mba-placement-1",
+    "url": "https://ksschool.org.in/img/mp1.jpg",
+    "page": "https://ksschool.org.in/mbaplacement.php",
+    "local": "/images/official/mba-placement-1.webp",
+    "width": 1400,
+    "height": 187,
+    "bytes": 18982
+  },
+  {
+    "name": "mba-placement-2",
+    "url": "https://ksschool.org.in/img/mp2.jpg",
+    "page": "https://ksschool.org.in/mbaplacement.php",
+    "local": "/images/official/mba-placement-2.webp",
+    "width": 1400,
+    "height": 187,
+    "bytes": 24472
+  },
+  {
+    "name": "hdfc-bank",
+    "url": "https://ksschool.org.in/img/mp1.jpg",
+    "page": "https://ksschool.org.in/mbaplacement.php",
+    "local": "/images/official/recruiter-hdfc-bank.svg",
+    "derivative": "SVG viewport over the official recruiter logo strip"
+  },
+  {
+    "name": "amul",
+    "url": "https://ksschool.org.in/img/mp1.jpg",
+    "page": "https://ksschool.org.in/mbaplacement.php",
+    "local": "/images/official/recruiter-amul.svg",
+    "derivative": "SVG viewport over the official recruiter logo strip"
+  },
+  {
+    "name": "torrent-power",
+    "url": "https://ksschool.org.in/img/mp1.jpg",
+    "page": "https://ksschool.org.in/mbaplacement.php",
+    "local": "/images/official/recruiter-torrent-power.svg",
+    "derivative": "SVG viewport over the official recruiter logo strip"
+  },
+  {
+    "name": "indiabulls",
+    "url": "https://ksschool.org.in/img/mp1.jpg",
+    "page": "https://ksschool.org.in/mbaplacement.php",
+    "local": "/images/official/recruiter-indiabulls.svg",
+    "derivative": "SVG viewport over the official recruiter logo strip"
+  },
+  {
+    "name": "sbi-life",
+    "url": "https://ksschool.org.in/img/mp1.jpg",
+    "page": "https://ksschool.org.in/mbaplacement.php",
+    "local": "/images/official/recruiter-sbi-life.svg",
+    "derivative": "SVG viewport over the official recruiter logo strip"
+  },
+  {
+    "name": "times-of-india",
+    "url": "https://ksschool.org.in/img/mp2.jpg",
+    "page": "https://ksschool.org.in/mbaplacement.php",
+    "local": "/images/official/recruiter-times-of-india.svg",
+    "derivative": "SVG viewport over the official recruiter logo strip"
+  },
+  {
+    "name": "pantaloons",
+    "url": "https://ksschool.org.in/img/mp2.jpg",
+    "page": "https://ksschool.org.in/mbaplacement.php",
+    "local": "/images/official/recruiter-pantaloons.svg",
+    "derivative": "SVG viewport over the official recruiter logo strip"
+  },
+  {
+    "name": "claris",
+    "url": "https://ksschool.org.in/img/mp2.jpg",
+    "page": "https://ksschool.org.in/mbaplacement.php",
+    "local": "/images/official/recruiter-claris.svg",
+    "derivative": "SVG viewport over the official recruiter logo strip"
+  },
+  {
+    "name": "vice-chancellor",
+    "url": "https://www.gujaratuniversity.ac.in/images/vc.jpg",
+    "page": "https://www.gujaratuniversity.ac.in/vicechancellor",
+    "local": "/images/official/vice-chancellor.webp",
+    "width": 300,
+    "height": 301,
+    "bytes": 12550
+  },
+  {
+    "name": "school-director",
+    "url": "https://ksschool.org.in/img/drbsagrawal.jpeg",
+    "page": "https://ksschool.org.in/ksdirector1.php",
+    "local": "/images/official/school-director.webp",
+    "width": 160,
+    "height": 160,
+    "bytes": 3940
+  },
+  {
+    "url": "https://ksschool.org.in/advent/images/4.jpg",
+    "alt": "Advent",
+    "name": "advent-4",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/advent-4.webp",
+    "width": 1024,
+    "height": 666,
+    "bytes": 128150
+  },
+  {
+    "url": "https://ksschool.org.in/advent/images/5.jpg",
+    "alt": "Advent",
+    "name": "advent-5",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/advent-5.webp",
+    "width": 1024,
+    "height": 718,
+    "bytes": 241098
+  },
+  {
+    "url": "https://ksschool.org.in/advent/images/6.jpg",
+    "alt": "Advent",
+    "name": "advent-6",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/advent-6.webp",
+    "width": 1024,
+    "height": 760,
+    "bytes": 123884
+  },
+  {
+    "url": "https://ksschool.org.in/images/Technomantra/4.jpg",
+    "alt": "Technomantra",
+    "name": "technomantra-4",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/technomantra-4.webp",
+    "width": 1024,
+    "height": 683,
+    "bytes": 129512
+  },
+  {
+    "url": "https://ksschool.org.in/images/Technomantra/5.jpg",
+    "alt": "Technomantra",
+    "name": "technomantra-5",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/technomantra-5.webp",
+    "width": 1024,
+    "height": 683,
+    "bytes": 116704
+  },
+  {
+    "url": "https://ksschool.org.in/images/Technomantra/6.jpg",
+    "alt": "Technomantra",
+    "name": "technomantra-6",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/technomantra-6.webp",
+    "width": 683,
+    "height": 1024,
+    "bytes": 78170
+  },
+  {
+    "url": "https://ksschool.org.in/images/Melange/4.jpg",
+    "alt": "Melange",
+    "name": "melange-4",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/melange-4.webp",
+    "width": 1024,
+    "height": 680,
+    "bytes": 77644
+  },
+  {
+    "url": "https://ksschool.org.in/images/Melange/5.jpg",
+    "alt": "Melange",
+    "name": "melange-5",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/melange-5.webp",
+    "width": 1024,
+    "height": 680,
+    "bytes": 99424
+  },
+  {
+    "url": "https://ksschool.org.in/images/Melange/6.jpg",
+    "alt": "Melange",
+    "name": "melange-6",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/melange-6.webp",
+    "width": 1024,
+    "height": 680,
+    "bytes": 44500
+  },
+  {
+    "url": "https://ksschool.org.in/images/seminar/4.jpg",
+    "alt": "Seminar",
+    "name": "seminar-4",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/seminar-4.webp",
+    "width": 1024,
+    "height": 768,
+    "bytes": 63772
+  },
+  {
+    "url": "https://ksschool.org.in/images/seminar/5.jpg",
+    "alt": "Seminar",
+    "name": "seminar-5",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/seminar-5.webp",
+    "width": 1024,
+    "height": 768,
+    "bytes": 115534
+  },
+  {
+    "url": "https://ksschool.org.in/images/seminar/6.jpg",
+    "alt": "Seminar",
+    "name": "seminar-6",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/seminar-6.webp",
+    "width": 1024,
+    "height": 768,
+    "bytes": 94400
+  },
+  {
+    "url": "https://ksschool.org.in/advent/images/7.jpg",
+    "alt": "Advent",
+    "name": "advent-7",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/advent-7.webp",
+    "width": 1024,
+    "height": 681,
+    "bytes": 138560
+  },
+  {
+    "url": "https://ksschool.org.in/images/Technomantra/7.jpg",
+    "alt": "Technomantra",
+    "name": "technomantra-7",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/technomantra-7.webp",
+    "width": 683,
+    "height": 1024,
+    "bytes": 132944
+  },
+  {
+    "url": "https://ksschool.org.in/images/Melange/7.jpg",
+    "alt": "Melange",
+    "name": "melange-7",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/melange-7.webp",
+    "width": 1024,
+    "height": 680,
+    "bytes": 101834
+  },
+  {
+    "url": "https://ksschool.org.in/images/seminar/7.jpg",
+    "alt": "Seminar",
+    "name": "seminar-7",
+    "page": "https://ksschool.org.in/photoG1.php",
+    "local": "/images/official/seminar-7.webp",
+    "width": 1024,
+    "height": 768,
+    "bytes": 110150
+  }
+]

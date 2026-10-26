@@ -1,22 +1,21 @@
 "use client";
 
+import { OFFICIAL_MEDIA } from "@/content/official-media";
+import { SCHOOL, PAST_MBA_RECRUITERS } from "@/content/school";
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { TrendingUp, Building2, Globe, Award, ArrowRight } from "lucide-react";
 
-const COMPANIES = [
-  "Google", "Amazon", "Microsoft", "Deloitte", "Infosys", "TCS",
-  "HDFC Bank", "Accenture", "Wipro", "Cognizant", "Capgemini", "IBM",
-];
+const COMPANIES = PAST_MBA_RECRUITERS;
 
 const STATS = [
-  { value: "100%", label: "Placement Rate", icon: Award },
-  { value: "42 LPA", label: "Highest Package", icon: TrendingUp },
-  { value: "200+", label: "Recruiters", icon: Building2 },
-  { value: "15+", label: "International", icon: Globe },
+ {value:"2",label:"Integrated Programs",icon:Award},
+ {value:"5 Years",label:"Program Duration",icon:TrendingUp},
+ {value:"Projects",label:"Applied Learning",icon:Building2},
+ {value:"Campus",label:"Gujarat University",icon:Globe},
 ];
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -24,7 +23,7 @@ const containerVariants = {
   }
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
@@ -57,12 +56,12 @@ export const PlacementReveal = () => (
         </div>
         <div className="flex gap-6 lg:gap-10">
           <div className="text-center lg:text-right">
-            <p className="text-2xl md:text-3xl font-bold text-gray-900">1,200+</p>
-            <p className="text-[10px] uppercase tracking-[0.15em] text-gray-500 mt-0.5">Offers</p>
+            <p className="text-2xl md:text-3xl font-bold text-gray-900">2</p>
+            <p className="text-[10px] uppercase tracking-[0.15em] text-gray-500 mt-0.5">Integrated Programs</p>
           </div>
           <div className="text-center lg:text-right">
-            <p className="text-2xl md:text-3xl font-bold text-gray-900">8.5 LPA</p>
-            <p className="text-[10px] uppercase tracking-[0.15em] text-gray-500 mt-0.5">Average</p>
+            <p className="text-2xl md:text-3xl font-bold text-gray-900">5 Years</p>
+            <p className="text-[10px] uppercase tracking-[0.15em] text-gray-500 mt-0.5">Program Duration</p>
           </div>
         </div>
       </motion.div>
@@ -88,27 +87,27 @@ export const PlacementReveal = () => (
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 flex-1 min-h-0">
         {/* Hero Image - Takes 3 columns */}
         <motion.div variants={itemVariants} className="lg:col-span-3 relative rounded-3xl overflow-hidden group shadow-lg shadow-gray-200">
-          <img
-            src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop"
+          <img loading="lazy" decoding="async"
+            src={OFFICIAL_MEDIA.students}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            alt="Placement Drive"
+            alt="KS School students pictured in the school's official archive"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
           <div className="absolute inset-0 flex flex-col justify-end p-6 lg:p-8">
             <div className="flex items-baseline gap-3 mb-3">
-              <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white">100%</h3>
-              <span className="text-sm sm:text-base text-gray-300">Placed</span>
+              <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white">Campus</h3>
+              <span className="text-sm sm:text-base text-gray-300">to Corporate</span>
             </div>
-            <button className="w-fit flex items-center gap-2 px-5 py-2.5 bg-white text-gray-900 rounded-full text-xs font-semibold hover:bg-gray-100 transition-colors shadow-lg">
-              View Report
+            <a href={SCHOOL.placements} target="_blank" rel="noreferrer" className="w-fit flex items-center gap-2 px-5 py-2.5 bg-white text-gray-900 rounded-full text-xs font-semibold hover:bg-gray-100 transition-colors shadow-lg">
+              Official Placement Page
               <ArrowRight size={14} />
-            </button>
+            </a>
           </div>
         </motion.div>
 
         {/* Companies List - Takes 2 columns */}
         <motion.div variants={itemVariants} className="lg:col-span-2 flex flex-col bg-white rounded-3xl p-5 shadow-lg shadow-gray-200 border border-gray-100">
-          <p className="text-[10px] uppercase tracking-[0.25em] text-gray-400 mb-3">Top Recruiters</p>
+          <p className="text-[10px] uppercase tracking-[0.25em] text-gray-400 mb-3">Past MBA Recruiters</p>
           <div className="flex flex-wrap gap-2 mb-4">
             {COMPANIES.map((company, i) => (
               <motion.span
@@ -122,16 +121,16 @@ export const PlacementReveal = () => (
           </div>
           <div className="mt-auto pt-4 border-t border-gray-100 space-y-2">
             <div className="flex justify-between items-center">
-              <span className="text-[11px] text-gray-500">Companies</span>
-              <span className="text-sm font-semibold text-gray-900">50+</span>
+              <span className="text-[11px] text-gray-500">Programs</span>
+              <span className="text-sm font-semibold text-gray-900">MBA & M.Sc.</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-[11px] text-gray-500">PPOs</span>
-              <span className="text-sm font-semibold text-gray-900">180+</span>
+              <span className="text-[11px] text-gray-500">School Brochure</span>
+              <span className="text-sm font-semibold text-gray-900">2025</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-[11px] text-gray-500">Internships</span>
-              <span className="text-sm font-semibold text-gray-900">75%</span>
+              <span className="text-[11px] text-gray-500">Learning</span>
+              <span className="text-sm font-semibold text-gray-900">Projects & Internships</span>
             </div>
           </div>
         </motion.div>

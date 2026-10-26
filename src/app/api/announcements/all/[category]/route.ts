@@ -1,27 +1,19 @@
-import { NextResponse } from 'next/server';
-
-const REMOTE_BASE = 'https://ks-server-hqsn.onrender.com';
-
-export async function GET(
-  request: Request,
-  { params }: { params: { category: string } }
-) {
-  try {
-    const { category } = await params;
-    const remoteUrl = `${REMOTE_BASE}/api/announcements/all/${encodeURIComponent(category)}`;
-
-    const res = await fetch(remoteUrl, { method: 'GET' });
-
-    if (!res.ok) {
-      const text = await res.text().catch(() => '');
-      console.warn('Announcements proxy: remote responded non-OK', res.status, text);
-      return NextResponse.json({ success: false, announcement: [] }, { status: 502 });
-    }
-
-    const data = await res.json();
-    return NextResponse.json(data);
-  } catch (err) {
-    console.error('Announcements proxy error:', err);
-    return NextResponse.json({ success: false, announcement: [] }, { status: 500 });
-  }
+import { NextResponse } from "next/server";
+import { schoolApi } from "@/lib/school-api";
+import { isPlaceholderContent } from "@/lib/content-quality";
+export async function GET(request: Request, {params}: {params: Promise<{category:string}>}) {
+ const {category} = await params;
+ try {
+  const data = await schoolApi("/api/announcements/all/" + encodeURIComponent(category));
+  const value = Array.isArray(data) ? data : data.announcement ?? data.announcements ?? data.data;
+  if(!(Array.isArray(value))) throw new Error("Invalid school response");
+  const announcement = value.filter((row: unknown) => {
+    if (!row || typeof row !== "object") return false;
+    const item = row as Record<string, unknown>;
+    return typeof item.title === "string" && !isPlaceholderContent(item.title, typeof item.description === "string" ? item.description : "");
+  });
+  return NextResponse.json({success:true,announcement});
+ } catch {
+  return NextResponse.json({success:false,announcement:[],message:"School information is temporarily unavailable. Please try again or contact the school."},{status:502});
+ }
 }

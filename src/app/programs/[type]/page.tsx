@@ -1,7 +1,10 @@
 // src/app/programs/[type]/page.tsx
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { OFFICIAL_MEDIA } from "@/content/official-media";
+import { SCHOOL } from "@/content/school";
+import { notFound } from "next/navigation";
+import React, { useEffect, use } from "react";
 import { CurtainFooter } from "@/components/curtain-footer";
 import { motion } from "framer-motion";
 import {
@@ -26,73 +29,33 @@ import {
 
 // --- DATA ---
 const programsData: Record<string, any> = {
-  "integrated-mba": {
-    title: "Integrated MBA",
-    accentTitle: "MBA",
-    subtitle: "Five-Year Program",
-    tagline: "Master of Business Administration",
-    hero: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2832&auto=format&fit=crop",
-    icon: Briefcase,
-    highlights: [
-      { icon: CalendarDays, label: "Duration", value: "5 Years" },
-      { icon: Users, label: "Eligibility", value: "12th Pass (Any Stream)" },
-      { icon: Award, label: "Degree Awarded", value: "BBA + MBA" },
-    ],
-    objective: "The Integrated MBA program aims to build a solid foundation in business management from day one. Instead of pursuing a traditional three-year bachelor's degree followed by a two-year MBA, this unified path provides continuous learning, professional grooming, and direct corporate exposure.",
-    specializations: [
-      { title: "Finance", desc: "Corporate finance, investment banking, risk management, and financial markets.", icon: Wallet },
-      { title: "Marketing", desc: "Brand management, digital marketing, consumer behavior, and sales strategy.", icon: Target },
-      { title: "Human Resource Management", desc: "Talent acquisition, organizational development, and labor laws.", icon: Users },
-    ],
-    structure: [
-      { phase: "Years 1 & 2", sub: "Foundation", desc: "Principles of Management, Micro & Macro Economics, Business Mathematics, Financial Accounting, and Business Communication." },
-      { phase: "Year 3", sub: "Core Management", desc: "Marketing Management, Human Resource Management, Operations Research, Management Accounting, and Cost Systems." },
-      { phase: "Years 4 & 5", sub: "Advanced & Specialisation", desc: "Strategic Management, Specialized Core Electives, Summer Internships, and Grand Corporate Projects." },
-    ],
-    careers: ["Management Trainee", "Financial Analyst", "Marketing Executive", "HR Generalist", "Business Development Manager"],
-  },
-  "m-sc-ca-it": {
-    title: "Integrated M.Sc.",
-    accentTitle: "CA & IT",
-    subtitle: "Five-Year Program",
-    tagline: "Computer Applications & Information Technology",
-    hero: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop",
-    icon: Code2,
-    highlights: [
-      { icon: CalendarDays, label: "Duration", value: "5 Years" },
-      { icon: Users, label: "Eligibility", value: "12th Pass (Science/Commerce with Maths)" },
-      { icon: Award, label: "Degree Awarded", value: "BSc + MSc" },
-    ],
-    objective: "The Integrated M.Sc. (CA & IT) program is engineered to address the fast-evolving demands of the global software and technology industry. It merges foundational computer science theory with cutting-edge software development practices to create agile tech professionals.",
-    specializations: [
-      { title: "Software Development", desc: "Full-stack development, object-oriented programming, and mobile app architecture.", icon: Code2 },
-      { title: "Data & Cloud Systems", desc: "Database management (DBMS/RDBMS), cloud computing frameworks, and data analytics.", icon: Server },
-      { title: "Networking & Security", desc: "Advanced computer networks, system administration, and cyber security principles.", icon: ShieldCheck },
-    ],
-    structure: [
-      { phase: "Years 1 & 2", sub: "Foundational Computing", desc: "Programming in C/C++, Web Designing (HTML/CSS/JavaScript), Digital Electronics, Data Structures, and Mathematical Foundations." },
-      { phase: "Year 3", sub: "Advanced Systems", desc: "Java Programming, Database Management Systems (DBMS), Operating Systems, and Software Engineering." },
-      { phase: "Years 4 & 5", sub: "Enterprise & Emerging Tech", desc: "Advanced Java/Python, Web Frameworks, Mobile Application Development, Software Project Management, and a mandatory 6-month Live Industrial Project." },
-    ],
-    careers: ["Software Engineer", "Full-Stack Developer", "Systems Analyst", "UI/UX Designer", "IT Consultant", "Database Administrator"],
-  },
+ "integrated-mba": {
+  title:"Integrated MBA",accentTitle:"MBA",subtitle:"Five-Year Program",tagline:"Master of Business Administration",hero:OFFICIAL_MEDIA.mbaProgram,icon:Briefcase,
+  highlights:[{icon:CalendarDays,label:"Duration",value:"5 Years"},{icon:Users,label:"Eligibility",value:SCHOOL.eligibilitySummary},{icon:Award,label:"Degree Awarded",value:"BBA + MBA"}],
+  objective:"The five-year integrated MBA builds a foundation in management and develops core and functional business knowledge through classroom and practical learning.",
+  specializations:[{title:"Finance",desc:"A specialization listed in the school's 2025 brochure.",icon:Wallet},{title:"Marketing",desc:"A specialization listed in the school's 2025 brochure.",icon:Target},{title:"Human Resource Management",desc:"A specialization listed in the school's 2025 brochure.",icon:Users}],
+  structure:[{phase:"Years 1-3",sub:"Management foundations",desc:"Communication, mathematics, economics, accounting and management form the undergraduate foundation."},{phase:"Years 4-5",sub:"Advanced management",desc:"Core and functional management learning builds on the undergraduate foundation."},{phase:"Throughout the program",sub:"Practical learning",desc:"Case studies, group discussions, presentations, internships and live projects connect classroom learning with practice."}],
+  careers:["Case studies","Presentations","Group discussions","Summer internships","Live projects"],
+ },
+ "m-sc-ca-it": {
+  title:"Integrated M.Sc.",accentTitle:"CA & IT",subtitle:"Five-Year Program",tagline:"Computer Applications & Information Technology",hero:OFFICIAL_MEDIA.mscProgram,icon:Code2,
+  highlights:[{icon:CalendarDays,label:"Duration",value:"5 Years"},{icon:Users,label:"Eligibility",value:SCHOOL.eligibilitySummary},{icon:Award,label:"Degree Awarded",value:"BSc + MSc"}],
+  objective:"The five-year integrated M.Sc. (CA & IT) combines computing foundations, laboratory practicals, advanced study and project work.",
+  specializations:[{title:"Artificial Intelligence & Machine Learning",desc:"A specialization listed in the school's 2025 brochure.",icon:Server},{title:"Web Technology",desc:"A specialization listed in the school's 2025 brochure.",icon:Code2},{title:"Information Security",desc:"A specialization listed in the school's 2025 brochure.",icon:ShieldCheck}],
+  structure:[{phase:"Years 1-3",sub:"Computing foundations",desc:"Programming, web technologies, databases and networking are supported by laboratory practicals."},{phase:"Years 4-5",sub:"Advanced computing",desc:"Advanced networking and software project management build on the undergraduate foundation."},{phase:"Project work",sub:"Applied learning",desc:"Dissertation and live projects provide opportunities to apply computing concepts."}],
+  careers:["Laboratory practicals","Software projects","Web development","Dissertation","Live projects"],
+ },
 };
 
 const whyChooseKSSBM = [
   { icon: Layers, title: "Dual Degree Edge", desc: "Saves transition time between undergraduate and postgraduate degrees with an uninterrupted 5-year curriculum." },
-  { icon: Wallet, title: "Affordable Excellence", desc: "Premium government-aided education at a fraction of private university costs." },
-  { icon: FlaskConical, title: "Experiential Learning", desc: "Mandatory summer internships for MBA and full-semester live corporate IT projects for M.Sc. students." },
+  { icon: Wallet, title: "University Campus", desc: "Study at KS School on the Gujarat University campus in Ahmedabad." },
+  { icon: FlaskConical, title: "Experiential Learning", desc: "Projects, practicals, summer internships and industry visits support applied learning." },
   { icon: Sparkles, title: "Holistic Development", desc: "Active student clubs, management fests, tech symposiums, and sports events." },
 ];
 
 export default function ProgramDynamicPage({ params }: { params: Promise<{ type: string }> }) {
-  const [type, setType] = useState<string>("");
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    params.then((res) => setType(res.type));
-    setMounted(true);
-  }, [params]);
+  const { type } = use(params);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -100,13 +63,7 @@ export default function ProgramDynamicPage({ params }: { params: Promise<{ type:
 
   const data = programsData[type];
 
-  if (!mounted || !data) {
-    return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
-        <div className="animate-pulse text-zinc-500 font-mono text-sm">LOADING PROGRAM DATA...</div>
-      </div>
-    );
-  }
+  if (!data) notFound();
 
   const ProgramIcon = data.icon;
 
@@ -147,15 +104,15 @@ export default function ProgramDynamicPage({ params }: { params: Promise<{ type:
             </p>
 
             <div className="flex flex-wrap gap-3 lg:gap-4">
-               <button className="group relative px-6 py-3 lg:px-8 lg:py-4 bg-[#111111] text-white overflow-hidden rounded-full text-sm lg:text-base">
+               <a href="#curriculum" className="group relative px-6 py-3 lg:px-8 lg:py-4 bg-[#111111] text-white overflow-hidden rounded-full text-sm lg:text-base">
                   <span className="relative z-10 flex items-center gap-2 font-medium">
                     Explore Curriculum <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </span>
                   <div className="absolute inset-0 bg-[#e31e24] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out" />
-               </button>
-               <button className="px-6 py-3 lg:px-8 lg:py-4 border border-zinc-300 text-[#111111] rounded-full hover:border-[#111111] transition-colors font-medium text-sm lg:text-base">
-                 Download Brochure
-               </button>
+               </a>
+               <a href={SCHOOL.brochure} target="_blank" rel="noreferrer" className="px-6 py-3 lg:px-8 lg:py-4 border border-zinc-300 text-[#111111] rounded-full hover:border-[#111111] transition-colors font-medium text-sm lg:text-base">
+                 Download 2025 Brochure
+               </a>
             </div>
           </motion.div>
 
@@ -208,7 +165,7 @@ export default function ProgramDynamicPage({ params }: { params: Promise<{ type:
               <h3 className="text-3xl sm:text-4xl md:text-6xl font-bold text-[#111111] tracking-tight">Specializations <br/> Offered</h3>
            </div>
            <p className="text-zinc-500 max-w-md text-base sm:text-lg font-light">
-              Tailor your degree with industry-relevant concentrations designed to meet modern market demands.
+              Specializations listed in the 2025 school brochure. Check current school notices for availability.
            </p>
         </div>
 
@@ -301,7 +258,7 @@ export default function ProgramDynamicPage({ params }: { params: Promise<{ type:
       {/* ===================== CAREERS TICKER ===================== */}
       <section className="py-16 sm:py-24 bg-[#111111] text-white overflow-hidden">
          <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-8 sm:mb-12 flex items-center justify-between">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">Career Outcomes</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">Practical Exposure</h2>
             <Rocket className="w-6 h-6 sm:w-8 sm:h-8 text-[#e31e24]" />
          </div>
          
@@ -361,13 +318,13 @@ export default function ProgramDynamicPage({ params }: { params: Promise<{ type:
                   <div>
                      <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 tracking-tight">Ready to Start?</h2>
                      <p className="text-white/80 text-base sm:text-lg mb-6 sm:mb-8 font-light">
-                        Admissions are merit-based through the Gujarat State Admission Committee (GCAS). Secure your future today.
+                        Admissions use Gujarat Common Admission Services (GCAS). Refer to the current admission notice for eligibility, dates and fees.
                      </p>
                      
                      <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8 text-left inline-block">
                         <div className="flex items-center gap-3 text-white/90">
                            <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
-                           <span className="text-sm sm:text-base">Eligibility: 12th Pass (Relevant Stream)</span>
+                           <span className="text-sm sm:text-base">{SCHOOL.eligibility}</span>
                         </div>
                         <div className="flex items-center gap-3 text-white/90">
                            <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
@@ -379,16 +336,16 @@ export default function ProgramDynamicPage({ params }: { params: Promise<{ type:
                   <div className="bg-white/10 backdrop-blur-md border border-white/20 p-6 sm:p-8 rounded-2xl sm:rounded-3xl">
                      <h3 className="text-lg sm:text-xl font-bold mb-4">Quick Links</h3>
                      <a 
-                        href="https://gujacpc.admissions.nic.in/" 
+                        href={SCHOOL.admissions}
                         target="_blank" 
                         rel="noreferrer"
                         className="flex items-center justify-between w-full bg-white text-[#e31e24] px-4 sm:px-6 py-3 sm:py-4 rounded-xl font-bold hover:bg-zinc-100 transition-colors mb-3 sm:mb-4 text-sm sm:text-base"
                      >
                         Visit GCAS Portal <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                      </a>
-                     <button className="flex items-center justify-between w-full bg-transparent border border-white/30 text-white px-4 sm:px-6 py-3 sm:py-4 rounded-xl font-medium hover:bg-white/10 transition-colors text-sm sm:text-base">
+                     <a href="/contact" className="flex items-center justify-between w-full bg-transparent border border-white/30 text-white px-4 sm:px-6 py-3 sm:py-4 rounded-xl font-medium hover:bg-white/10 transition-colors text-sm sm:text-base">
                         Contact Admissions Office
-                     </button>
+                     </a>
                   </div>
                </div>
             </div>
@@ -398,4 +355,4 @@ export default function ProgramDynamicPage({ params }: { params: Promise<{ type:
       <CurtainFooter />
     </div>
   );
-} 
+}

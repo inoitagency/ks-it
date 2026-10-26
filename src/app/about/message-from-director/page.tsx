@@ -1,19 +1,20 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { ReactLenis } from "lenis/dist/lenis-react";
+import { SmoothScroll } from "@/components/smooth-scroll";
 import { CurtainFooter } from "@/components/curtain-footer";
 import { motion } from "framer-motion";
+import { LEADERSHIP } from "@/content/school";
 
 export default function DirectorMessagePage() {
   useEffect(() => {
     if (typeof window !== "undefined") window.scrollTo(0, 0);
   }, []);
-  const image = encodeURI('/assets/Dr._Paavan_Pandit.jpg');
+  const image = LEADERSHIP[1].image;
 
   return (
     <div className="bg-white min-h-screen text-[#111111]">
-      <ReactLenis root options={{ lerp: 0.05 }}>
+      <SmoothScroll>
 
         <main className="pt-32 pb-24 px-6 max-w-7xl mx-auto relative z-10">
           <div className="mb-12">
@@ -31,11 +32,14 @@ export default function DirectorMessagePage() {
               <div className="rounded-xl overflow-hidden shadow-lg">
                 <img
                   src={image}
-                  alt="Dr. Paavan Pandit"
+                  alt={LEADERSHIP[1].name}
                   className="w-full h-[420px] object-cover"
                   referrerPolicy="no-referrer"
                   onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).src = "https://picsum.photos/seed/director/1200/1200";
+                    const image = e.currentTarget;
+                    if (image.dataset.fallback) return;
+                    image.dataset.fallback = "true";
+                    image.src = "/ks-logo.png";
                   }}
                 />
               </div>
@@ -70,8 +74,8 @@ export default function DirectorMessagePage() {
                 <div className="mt-8 flex justify-end text-right">
                   <div>
                     <p className="font-semibold">Thank You</p>
-                    <p className="mt-4 font-bold">- Dr. Paavan Pandit</p>
-                    <p>Director,</p>
+                    <p className="mt-4 font-bold">- Dr. B. S. Agrawal</p>
+                    <p>I/C Director,</p>
                     <p>K. S. School of Business Management and Information Technology.</p>
                   </div>
                 </div>
@@ -81,7 +85,7 @@ export default function DirectorMessagePage() {
         </main>
 
         <CurtainFooter />
-      </ReactLenis>
+      </SmoothScroll>
     </div>
   );
 }

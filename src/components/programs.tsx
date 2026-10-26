@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { OFFICIAL_MEDIA } from "@/content/official-media";
+import { motion, useMotionValue } from "framer-motion";
 import Link from "next/link";
+import { SCHOOL } from "@/content/school";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 /* -----------------------------------------------
@@ -14,31 +15,24 @@ const PROGRAMS = [
   {
     title: "M.Sc. (CA & IT)",
     slug: "m-sc-ca-it",
-    img: "https://source.unsplash.com/1200x800/?technology,computer,code",
+    img: OFFICIAL_MEDIA.programTechnology,
     desc: "A 5-year integrated path to mastering computer applications and information technology.",
     duration: "5 Years",
-    eligibility: "12th Pass (Science/Commerce with Maths)",
+    eligibility: SCHOOL.eligibilitySummary,
   },
   {
     title: "Integrated MBA",
     slug: "integrated-mba",
-    img: "https://source.unsplash.com/1200x800/?business,meeting,leadership",
+    img: OFFICIAL_MEDIA.programManagement,
     desc: "A 5-year comprehensive leadership journey blending management theory with real-world practice.",
     duration: "5 Years",
-    eligibility: "12th Pass (Any Stream)",
+    eligibility: SCHOOL.eligibilitySummary,
   },
 ];
 
 export const Programs = () => {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
   return (
     <motion.section
@@ -62,12 +56,12 @@ export const Programs = () => {
               Our curriculum is designed to evolve with the industry, ensuring
               our students are always ahead of the curve.
             </p>
-            <button className="group flex items-center gap-2 font-bold uppercase tracking-widest text-xs text-ink">
+            <a href={SCHOOL.brochure} target="_blank" rel="noreferrer" className="group flex items-center gap-2 font-bold uppercase tracking-widest text-xs text-ink">
               View All Details
               <div className="flex h-8 w-8 items-center justify-center rounded-full border border-zinc-200 transition-all duration-300 group-hover:border-zinc-900 group-hover:bg-zinc-900 group-hover:text-white">
                 <ArrowRight size={14} />
               </div>
-            </button>
+            </a>
           </div>
         </div>
 
@@ -75,36 +69,46 @@ export const Programs = () => {
         <div className="border-t border-zinc-100">
           {PROGRAMS.map((prog, i) => (
             <Link key={i} href={`/programs/${prog.slug}`} className="block">
-              <div className="service-tile group">
+              <div className="service-tile group flex-wrap sm:flex-nowrap" onPointerMove={(event) => {
+                if (event.pointerType === "touch") return;
+                mouseX.set(event.clientX);
+                mouseY.set(event.clientY);
+              }}>
               {/* Floating image on hover */}
+              <motion.div
+                className="fixed left-0 top-0 z-40 pointer-events-none"
+                style={{ x: mouseX, y: mouseY }}
+              >
               <div
                 className="service-image-hover"
-                style={{
-                  left: mousePos.x,
-                  top: mousePos.y,
-                }}
+                style={{ position: "absolute", left: 0, top: 0 }}
               >
                 <img
                   src={prog.img}
                   alt={prog.title}
+                  decoding="async"
                   className="h-full w-full rounded-2xl object-cover shadow-2xl"
                   referrerPolicy="no-referrer"
                   onError={(e) => {
-                    // fallback to Picsum seeded image if Unsplash fails
-                    (e.currentTarget as HTMLImageElement).src = `https://picsum.photos/seed/${prog.slug}/1200/800`;
+                    // Try the fallback only once, even if the fallback also fails.
+                    const image = e.currentTarget;
+                    if (image.dataset.fallback) return;
+                    image.dataset.fallback = "true";
+                    image.src = OFFICIAL_MEDIA.campus;
                   }}
                 />
               </div>
+              </motion.div>
 
               {/* Title row */}
-              <div className="flex-1">
-                <div className="mb-2 flex items-center gap-6">
+              <div className="min-w-0 flex-1">
+                <div className="mb-2 flex items-center gap-3 sm:gap-6">
                   <span className="text-sm font-bold text-accent">0{i + 1}</span>
-                  <h3 className="program-title font-display text-3xl text-ink md:text-6xl">
+                  <h3 className="program-title font-display text-2xl text-ink sm:text-3xl lg:text-6xl">
                     {prog.title}
                   </h3>
                 </div>
-                <div className="ml-0 flex gap-8 text-[10px] font-bold uppercase tracking-widest text-zinc-400 md:ml-12">
+                <div className="ml-0 flex flex-wrap gap-3 sm:gap-8 text-[10px] font-bold uppercase tracking-widest text-zinc-400 md:ml-12">
                   <span>{prog.duration}</span>
                   <span className="text-zinc-200">|</span>
                   <span>{prog.eligibility}</span>
@@ -117,7 +121,7 @@ export const Programs = () => {
               </div>
 
               {/* Arrow */}
-              <div className="flex h-14 w-14 items-center justify-center rounded-full border border-zinc-200 transition-all duration-500 group-hover:border-zinc-900 group-hover:bg-zinc-900 group-hover:text-white">
+              <div className="flex h-10 w-10 shrink-0 sm:h-14 sm:w-14 items-center justify-center rounded-full border border-zinc-200 transition-all duration-500 group-hover:border-zinc-900 group-hover:bg-zinc-900 group-hover:text-white">
                 <ArrowUpRight size={22} />
               </div>
               </div>

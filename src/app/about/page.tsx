@@ -1,4 +1,5 @@
 "use client";
+import { OFFICIAL_MEDIA } from "@/content/official-media";
 import React from "react";
 import { Nav } from "@/components/nav";
 import { CurtainFooter } from "@/components/curtain-footer";
@@ -45,8 +46,8 @@ export default function AboutPage() {
                 {/* Main Campus Card */}
                 <div className="md:col-span-8 bento-card border-none relative overflow-hidden group min-h-[350px]">
                   <img 
-                    src="https://picsum.photos/seed/campus-arch/1200/800" 
-                    alt="Campus" 
+                    src={OFFICIAL_MEDIA.about}
+                    alt="Student photo display at Advent, KS School"
                     className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-1000"
                     referrerPolicy="no-referrer"
                   />
@@ -61,7 +62,7 @@ export default function AboutPage() {
                       </div>
                     </div>
                     <div>
-                      <h3 className="text-3xl font-display font-bold mb-3 text-[#111111]">World-Class Campus</h3>
+                      <h3 className="text-3xl font-display font-bold mb-3 text-[#111111]">Gujarat University Campus</h3>
                       <p className="text-[#111111] max-w-md leading-relaxed font-medium">
                         Located in the heart of Gujarat University, our campus provides a serene yet dynamic environment for learning and growth.
                       </p>
@@ -80,8 +81,8 @@ export default function AboutPage() {
                 <div className="md:col-span-4 bento-card !bg-[#111111] text-white border-none flex flex-col justify-between min-h-[180px]">
                   <Users size={32} className="text-[#e31e24]" />
                   <div>
-                    <div className="text-4xl font-display font-bold mb-1 text-white">10k+</div>
-                    <div className="text-white uppercase tracking-widest text-[10px] font-bold">Global Alumni</div>
+                    <div className="text-4xl font-display font-bold mb-1 text-white">Connected</div>
+                    <div className="text-white uppercase tracking-widest text-[10px] font-bold">Alumni Community</div>
                   </div>
                 </div>
 
@@ -89,7 +90,7 @@ export default function AboutPage() {
                 <div className="md:col-span-4 bento-card border-black/5 hover:bg-white transition-colors">
                   <Globe size={24} className="mb-4 text-[#e31e24]" />
                   <h4 className="text-lg font-display font-bold mb-2">Global Reach</h4>
-                  <p className="text-[#111111] text-xs leading-relaxed font-medium">Leading innovation in top multinationals across the globe.</p>
+                  <p className="text-[#111111] text-xs leading-relaxed font-medium">The official school overview describes alumni working in national and international organizations.</p>
                 </div>
 
                 <div className="md:col-span-4 bento-card border-black/5 hover:bg-white transition-colors">
@@ -112,11 +113,11 @@ export default function AboutPage() {
                 </p>
 
                 <p>
-                  Our mission at the school is “Igniting young minds to grow in knowledge and wisdom and stand up high in the corporate world.” With continuously updated syllabi aligned with the CBCS pattern, project-based learning, and field studies, our students are nurtured and groomed to meet industry expectations. This success is made possible by a team of highly qualified faculty members with vast academic and industry experience.
+                  Our mission at the school is “Igniting young minds to grow in knowledge and wisdom and stand up high in the corporate world.” Projects, practical learning and field studies support classroom learning. This success is made possible by a team of highly qualified faculty members with vast academic and industry experience.
                 </p>
 
                 <p>
-                  The institute is located in the lush environment of Gujarat University campus, equipped with state-of-the-art facilities such as LCD projectors, modern computer labs, and a well-stocked library. A full-fledged Placement Cell ensures that every student is career-ready, guiding them from campus to corporate success. Our alumni now shine across national and international organizations.
+                  The institute is located in the lush environment of Gujarat University campus, equipped with state-of-the-art facilities such as LCD projectors, modern computer labs, and a well-stocked library. Placement cells support career preparation and connect classroom learning with recruitment opportunities. Our alumni now shine across national and international organizations.
                 </p>
 
                 <p>

@@ -1,30 +1,13 @@
 import { NextResponse } from "next/server";
+import { schoolApi } from "@/lib/school-api";
+export async function GET() {
 
-const REMOTE_URL = "https://ks-server-hqsn.onrender.com/api/oldPapers/getByCategory/All";
-
-const samplePapers = [
-  {
-    _id: "p1",
-    url: "papers/sample-1.pdf",
-    category: "Computer Science",
-    year: "2023",
-    semester: "4",
-    examType: "End Semester",
-    title: "Data Structures - Question Paper",
-    code: "CS401",
-  },
-];
-
-export async function GET(request: Request) {
-  try {
-    const res = await fetch(REMOTE_URL, { method: 'GET' });
-    if (!res.ok) throw new Error(`remote responded ${res.status}`);
-    const json = await res.json();
-    // Normalize shape: remote uses `oldPaper` key
-    const papers = json.oldPaper || json.oldPapers || json.papers || [];
-    return NextResponse.json({ success: true, oldPaper: papers });
-  } catch (err) {
-    console.warn('Failed to fetch remote papers, returning sample data.', err);
-    return NextResponse.json({ success: true, oldPaper: samplePapers });
-  }
+ try {
+  const data = await schoolApi("/api/oldPapers/getByCategory/All");
+  const value = data.oldPaper ?? data.oldPapers ?? data.papers;
+  if(!(Array.isArray(value))) throw new Error("Invalid school response");
+  return NextResponse.json({success:true,oldPaper:value});
+ } catch {
+  return NextResponse.json({success:false,oldPaper:[],message:"School information is temporarily unavailable. Please try again or contact the school."},{status:502});
+ }
 }

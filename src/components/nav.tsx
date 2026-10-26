@@ -16,7 +16,7 @@ const NAV_LINKS = [
 
 const ABOUT_LINKS = [{ label: "Message from Director's Desk", href: "/about/message-from-director" }];
 const PROGRAMS_LINKS = [{ label: "Integrated MBA", href: "/programs/integrated-mba" }, { label: "M.Sc. (CA & IT)", href: "/programs/m-sc-ca-it" }];
-const PLACEMENTS_LINKS = [{ label: "MBA Placements", href: "/placements/mba" }, { label: "MSc Placements", href: "/placements/m-sc-ca-it" }];
+const PLACEMENTS_LINKS = [{ label: "MBA Placements", href: "/placements/mba" }, { label: "M.Sc. (CA & IT) Placements", href: "/placements/m-sc-ca-it" }];
 const FACULTY_LINKS = [{ label: "MSc IT Faculty", href: "/faculty/msc-it" }, { label: "MBA Faculty", href: "/faculty/mba" }];
 
 export const Nav = () => {
@@ -24,7 +24,24 @@ export const Nav = () => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
+    if (!menuOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const closeOnEscape = (event: KeyboardEvent) => { if (event.key === "Escape") setMenuOpen(false); };
+    const media = window.matchMedia("(min-width: 1280px)");
+    const closeOnDesktop = () => { if (media.matches) setMenuOpen(false); };
+    document.addEventListener("keydown", closeOnEscape);
+    media.addEventListener("change", closeOnDesktop);
+    return () => {
+      document.body.style.overflow = previous;
+      document.removeEventListener("keydown", closeOnEscape);
+      media.removeEventListener("change", closeOnDesktop);
+    };
+  }, [menuOpen]);
+
+  useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -44,7 +61,7 @@ export const Nav = () => {
             <img src="/ks-logo.png" alt="KS School" className="h-10 w-auto" />
           </Link>
 
-          <div className="hidden items-center gap-8 md:flex">
+          <div className="hidden items-center gap-8 xl:flex">
             {NAV_LINKS.map((link) => {
               // Standard links
               if (link.label === "Home" || link.label === "Announcements" || link.label === "Papers" || link.label === "Contact") {
@@ -69,7 +86,7 @@ export const Nav = () => {
             <DesktopDropdown key="placements" label="Placements" links={PLACEMENTS_LINKS} />
           </div>
 
-          <button onClick={() => setMenuOpen(!menuOpen)} className="text-zinc-900 md:hidden" aria-label="Toggle menu">
+          <button onClick={() => setMenuOpen(!menuOpen)} className="text-zinc-900 xl:hidden" aria-label="Toggle menu" aria-expanded={menuOpen} aria-controls="mobile-navigation">
             {menuOpen ? <FiX size={22} /> : <FiMenu size={22} />}
           </button>
         </div>
@@ -85,7 +102,7 @@ const DesktopDropdown = ({ label, links, extraLink }: any) => (
     <button className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.2em] text-zinc-900 transition-colors duration-300 hover:text-zinc-600 cursor-pointer">
       {label} <FiChevronDown size={14} className="transition-transform duration-300 group-hover:rotate-180" />
     </button>
-    <div className="absolute top-full left-1/2 -translate-x-1/2 w-64 bg-white border border-zinc-200 rounded-md shadow-lg p-2 mt-2 transition-all duration-300 origin-top scale-95 opacity-0 invisible group-hover:scale-100 group-hover:opacity-100 group-hover:visible z-50">
+    <div className="absolute top-full left-1/2 -translate-x-1/2 w-64 bg-white border border-zinc-200 rounded-md shadow-lg p-2 mt-2 transition-all duration-300 origin-top scale-95 opacity-0 invisible group-hover:scale-100 group-hover:opacity-100 group-hover:visible group-focus-within:scale-100 group-focus-within:opacity-100 group-focus-within:visible z-50">
       {[...links, ...(extraLink ? [extraLink] : [])].map((sublink: any) => (
         <Link key={sublink.label} href={sublink.href} className="block p-3 text-[10px] font-bold uppercase tracking-wider text-zinc-800 hover:text-zinc-950 hover:bg-zinc-50 rounded-sm transition-all">
           {sublink.label}
@@ -98,12 +115,14 @@ const DesktopDropdown = ({ label, links, extraLink }: any) => (
 const MobileMenu = ({ open, onClose }: { open: boolean; onClose: () => void }) => (
   <AnimatePresence>
     {open && (
-      <motion.div className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-6 bg-white/95 backdrop-blur-lg md:hidden py-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-        {NAV_LINKS.map((link) => (
-          <Link key={link.label} href={link.href} onClick={onClose} className="text-lg font-bold uppercase tracking-[0.3em] text-zinc-900 hover:text-zinc-600">
+      <motion.div id="mobile-navigation" data-lenis-prevent className="fixed inset-0 z-40 overflow-y-auto bg-white/95 backdrop-blur-lg xl:hidden pt-28 pb-10 px-6" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+        <div className="mx-auto grid max-w-xl grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5">
+        {[...NAV_LINKS.filter(link => link.label !== "Faculty"), ...ABOUT_LINKS, ...PROGRAMS_LINKS, ...PLACEMENTS_LINKS, ...FACULTY_LINKS].map((link) => (
+          <Link key={link.label} href={link.href} onClick={onClose} className="text-sm font-bold uppercase tracking-[0.15em] text-zinc-900 hover:text-zinc-600 py-2">
             {link.label}
           </Link>
         ))}
+        </div>
       </motion.div>
     )}
   </AnimatePresence>
